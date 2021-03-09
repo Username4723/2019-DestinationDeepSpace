@@ -36,8 +36,7 @@ public class RobotMap {
 	public static final int HATCH_INTAKE_REVERSE = 0;
 
 	//Offsets
-	public static final float WRIST_OFFSET_COMP = 4.06494099f;
-	public static final float WRIST_OFFSET = WRIST_OFFSET_COMP;
+	public static final float WRIST_OFFSET = 4.06494099f;
 
 	//Elevator Heights
 	public static final double TRAVEL_HEIGHT = 2;
