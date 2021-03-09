@@ -14,7 +14,6 @@ public class SemiAuto {
 	public boolean ceng = false;
 	public boolean reng = false;
 	public boolean lift = false;
-	public double pval = 0;
 	public double pFrontPos;
 	public double pBackPos;
 	public double targetAngle;
@@ -74,7 +73,7 @@ public class SemiAuto {
 
 	private void lift(int level) {
 		Robot.climb.moveTo(CLIMB_HEIGHT[level] + CLIMB_ELEVATOR_MAX_OFFSET);
-		
+
 		if(elevatorSetpoint(CLIMB_WRIST_ANGLE[1], CLIMB_HEIGHT[level] - Robot.climb.getPosition(), true)) {
 			//Robot.elevator.setIntake(false);
 		}

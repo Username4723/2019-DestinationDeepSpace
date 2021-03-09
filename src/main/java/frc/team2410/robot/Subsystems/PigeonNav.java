@@ -9,12 +9,10 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 public class PigeonNav implements PIDSource
 {
 	private PigeonIMU gyro;
-	private double[] ypr;
 	private int offset;
 	
 	public PigeonNav() {
 		this.gyro = new PigeonIMU(PIGEON_IMU_SRX);
-		this.ypr = new double[3];
 		this.resetHeading(0);
 	}
 	

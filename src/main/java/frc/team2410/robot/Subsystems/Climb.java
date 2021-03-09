@@ -27,8 +27,6 @@ public class Climb {
 	
 	public void moveTo(double height) { targetHeight = height; }
 	
-	public void setSpeed(double speed) { winchMotor.set(speed); }
-	
 	public double getPosition() { return heightEncoder.getDistance() + offset; }
 	
 	public double getTarget() { return targetHeight; }

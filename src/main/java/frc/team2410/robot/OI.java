@@ -64,9 +64,7 @@ public class OI {
 			Robot.climb.reset(0);
 		}
 
-		if(leadingEdge(false, 10)) {
-			//Robot.elevator.reset(0);
-		}
+		leadingEdge(false, 10);//Robot.elevator.reset(0);
 
 		if(joy.getRawButton(3)) {
 			Robot.semiAuto.climb(0);

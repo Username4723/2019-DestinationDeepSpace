@@ -13,10 +13,6 @@ public class Autonomous {
 	private int state = 0;
 	private boolean autoDone;
 	
-	public Autonomous() {
-	
-	}
-	
 	public void init(int autoNumber) {
 		autoDone = false;
 		state = 0;

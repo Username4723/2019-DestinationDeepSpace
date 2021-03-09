@@ -11,7 +11,6 @@ public class Elevator {
 	private Encoder heightEncoder;
 	
 	private double targetHeight;
-	public double targetWrist;
 	private double offset;
 	private boolean checkStartReleased = false;
 	
@@ -26,8 +25,6 @@ public class Elevator {
 	public void moveTo(double height) {
 		targetHeight = height;
 	}
-	
-	public void setSpeed(double speed) {winchMotor.set(speed); }
 	
 	public double getPosition() {
 		return heightEncoder.getDistance() + offset;
