@@ -38,8 +38,8 @@ public class Drivetrain {
 	}
 
 	public void joystickDrive(boolean fieldOriented) {
-		double speedMultiplier = Robot.oi.getSlider();
-		crabDrive(Robot.oi.getX(), Robot.oi.getY(), Robot.oi.getTwist(), speedMultiplier, fieldOriented);
+		double speedMultiplier = Robot.userInput.getSlider();
+		crabDrive(Robot.userInput.getX(), Robot.userInput.getY(), Robot.userInput.getTwist(), speedMultiplier, fieldOriented);
 	}
 
 	public void returnWheelsToZero() {

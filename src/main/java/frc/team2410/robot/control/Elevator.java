@@ -41,8 +41,8 @@ public class Elevator implements LogicController {
 	}
 
 	public void loop() {
-		double elevatorStick = Robot.oi.getAnalogStick(true, true);
-		if (Robot.oi.startPressed()) {
+		double elevatorStick = Robot.userInput.getAnalogStick(true, true);
+		if (Robot.userInput.startPressed()) {
 			winchMotor.set(0.2);
 			checkStartReleased = true;
 		} else if (checkStartReleased) {

@@ -16,7 +16,7 @@ import java.util.Map;
 public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain;
 	public static PigeonNav gyro;
-	public static OI oi;
+	public static UserInput userInput;
 	public static Vision vision;
 	public static SemiAuto semiAuto;
 	public static Elevator elevator;
@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 		//Create subsystems
 		gyro = new PigeonNav();
 		drivetrain = new Drivetrain();
-		oi = new OI();
+		userInput = new UserInput();
 		vision = new Vision();
 		semiAuto = new SemiAuto();
 		elevator = new Elevator();
@@ -132,22 +132,22 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		//Run subsystem loops
-		oi.pollButtons();
+		userInput.pollButtons();
 		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::loop);
 		drivetrain.joystickDrive(fieldOriented);
 
 		if (elevator.winchMotor.badCurrent()) {
-			led.status(255, 255, 0, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);
+			led.status(255, 255, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
 		} else if (semiAuto.placeState == -1) {
-			led.status(255, 0, 255, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);
+			led.status(255, 0, 255, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
 		} else if (semiAuto.engaged) {
-			led.status(255, 0, 0, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);
+			led.status(255, 0, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
 		} else if (vision.getCentralValue()[0] != 0) {
-			led.status(0, 255, 0, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);
+			led.status(0, 255, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
 		} else {
-			led.status(0, 0, 255, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);
+			led.status(0, 0, 255, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
 		}
 
-		SmartDashboard.putNumber("LED Speed", 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()));
+		SmartDashboard.putNumber("LED Speed", 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()));
 	}
 }

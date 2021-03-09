@@ -95,7 +95,7 @@ public class Intake implements LogicController {
 	}
 
 	public void loop() {
-		double wristStick = Robot.oi.getAnalogStick(false, true);
+		double wristStick = Robot.userInput.getAnalogStick(false, true);
 		if (wristStick != 0) {
 			pid.disable();
 			setWrist(-wristStick);

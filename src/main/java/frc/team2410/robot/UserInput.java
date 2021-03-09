@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class OI {
+public class UserInput {
 	private final boolean[][] canPress = new boolean[2][12];
 	private final GenericHID[] controllers = new GenericHID[2];
 	private final Joystick joy;
 	private final XboxController xbox;
 
-	OI() {
+	UserInput() {
 		joy = new Joystick(0);
 		xbox = new XboxController(1);
 		controllers[0] = joy;
