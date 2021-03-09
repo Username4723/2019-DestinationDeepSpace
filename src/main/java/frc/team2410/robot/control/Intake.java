@@ -4,13 +4,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
+import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 import static frc.team2410.robot.RobotMap.*;
 
-public class Intake {
+public class Intake implements LogicController {
 	private final DoubleSolenoid solenoid;
 	private final WPI_TalonSRX wrist;
 	private final AnalogInput wristEncoder;

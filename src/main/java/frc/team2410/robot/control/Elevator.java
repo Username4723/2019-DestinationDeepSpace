@@ -1,12 +1,13 @@
 package frc.team2410.robot.control;
 
 import edu.wpi.first.wpilibj.Encoder;
+import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.TalonPair;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class Elevator {
+public class Elevator implements LogicController {
 	private final Encoder heightEncoder;
 	public TalonPair winchMotor;
 	private double targetHeight;

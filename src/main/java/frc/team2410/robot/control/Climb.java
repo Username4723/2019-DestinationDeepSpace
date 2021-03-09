@@ -2,11 +2,12 @@ package frc.team2410.robot.control;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
+import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class Climb {
+public class Climb implements LogicController {
 	private final WPI_TalonSRX winchMotor;
 	private final Encoder heightEncoder;
 

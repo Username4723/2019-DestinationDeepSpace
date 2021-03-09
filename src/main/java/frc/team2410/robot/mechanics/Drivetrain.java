@@ -1,6 +1,7 @@
 package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.wpilibj.PIDController;
+import frc.team2410.robot.GameState;
 import frc.team2410.robot.NumericalPIDOutput;
 import frc.team2410.robot.Robot;
 
@@ -67,7 +68,7 @@ public class Drivetrain {
 		}
 
 		// Sets desired heading dependant if gyro still moving
-		if ((rotation == 0 && Math.abs(pHead - Robot.gyro.getHeading()) < 1) || Robot.semiAuto.reng || !Robot.autonomous.getAutoDone()) {
+		if ((rotation == 0 && Math.abs(pHead - Robot.gyro.getHeading()) < 1) || Robot.semiAuto.reng || Robot.currentState == GameState.AUTONOMOUS) {
 			gyroPID.setSetpoint(desiredHeading);
 			rotation = -gyroPID.get();
 		} else {

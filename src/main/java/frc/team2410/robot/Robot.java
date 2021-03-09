@@ -1,5 +1,6 @@
 package frc.team2410.robot;
 
+import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,6 +11,11 @@ import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
 import frc.team2410.robot.control.auto.AutoState;
 import frc.team2410.robot.mechanics.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static frc.team2410.robot.RobotMap.*;
 
@@ -23,7 +29,6 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Climb climb;
 	public static LED led;
-	public static AutoController autonomous;
 	static boolean fieldOriented = true;
 	private float smp;
 	private float smi;
@@ -33,6 +38,9 @@ public class Robot extends TimedRobot {
 	private double gd;
 	private boolean startMatch = true;
 	private int pState = -1;
+
+	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
+	public static GameState currentState;
 
 	public Robot() {
 	}
@@ -46,11 +54,14 @@ public class Robot extends TimedRobot {
 		vision = new Vision();
 		semiAuto = new SemiAuto();
 		elevator = new Elevator();
-		intake = new Intake();
 		climb = new Climb();
 		led = new LED();
-		autonomous = new AutoController();
 		led.setColor(0, 0, 255);
+
+		registerLogicController(GameState.AUTONOMOUS, new AutoController());
+		registerLogicController(GameState.TELEOP, intake);
+		registerLogicController(GameState.TELEOP, elevator);
+		registerLogicController(GameState.TELEOP, climb);
 
 		//Put PID changers so we don't have to push code every tune
 		smp = RobotMap.SWERVE_MODULE_P;
@@ -65,6 +76,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("gyro p", gp);
 		SmartDashboard.putNumber("gyro i", gi);
 		SmartDashboard.putNumber("gyro d", gd);
+	}
+
+	private void registerLogicController(GameState state, LogicController controller) {
+		this.gameControllers.computeIfAbsent(state, it -> new ArrayList<>()).add(controller);
 	}
 
 	@Override
@@ -123,7 +138,8 @@ public class Robot extends TimedRobot {
 		startMatch = true;
 		semiAuto.t.reset();
 		semiAuto.t.start();
-		autonomous.init(AutoState.CARGOSHIP_LEFT);
+		currentState = GameState.AUTONOMOUS;
+		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::init);
 	}
 
 	@Override
@@ -131,27 +147,22 @@ public class Robot extends TimedRobot {
 		if (startMatch) {
 			startMatch = !semiAuto.startMatch();
 		}
-		if (autonomous.getAutoDone()) {
-			teleopPeriodic();
-		} else {
-			autonomous.loop();
-			elevator.autoLoop();
-		}
+
+		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::loop);
+		elevator.autoLoop();
 	}
 
 	@Override
 	public void teleopInit() {
-		autonomous.setAutoDone(true);
+		currentState = GameState.TELEOP;
 	}
 
 	@Override
 	public void teleopPeriodic() {
 		//Run subsystem loops
 		oi.pollButtons();
+		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::loop);
 		drivetrain.joystickDrive(fieldOriented);
-		elevator.loop();
-		intake.loop();
-		climb.loop();
 
 		if (elevator.winchMotor.badCurrent()) {
 			led.status(255, 255, 0, 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()), fieldOriented);

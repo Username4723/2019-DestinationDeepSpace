@@ -2,38 +2,25 @@ package frc.team2410.robot.control.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class AutoController {
+public class AutoController implements LogicController {
     public Timer timer;
-    private AutoState autoState;
+    private AutoState autoState = AutoState.CARGOSHIP_LEFT;
     private int state = 0;
-    private boolean autoDone;
 
-    public void init(AutoState autoState) {
-        autoDone = false;
+    public void init() {
         state = 0;
-        this.autoState = autoState;
         timer = new Timer();
-    }
-
-    public boolean getAutoDone() {
-        return autoDone;
-    }
-
-    public void setAutoDone(boolean autoDone) {
-        this.autoDone = autoDone;
     }
 
     public void loop() {
         SmartDashboard.putNumber("Auto Internal Substate", state);
         SmartDashboard.putString("Auto State", autoState.name());
         switch (autoState) {
-            case DISABLED:
-                autoDone = true;
-                break;
             case CARGOSHIP_LEFT:
                 cargoship(true);
                 break;
@@ -46,8 +33,6 @@ public class AutoController {
             case ROCKET_RIGHT_FRONT:
                 rocketFront(false);
         }
-
-        if (Robot.oi.getAbortAuto()) autoDone = true;
     }
 
     private void cargoship(boolean left) {
@@ -76,7 +61,7 @@ public class AutoController {
                 if (timer.get() > 0.1) {
                     timer.reset();
                     timer.start();
-                    autoDone = true;
+                    //TODO Advance
                 }
                 break;
         }
@@ -117,7 +102,7 @@ public class AutoController {
                 Robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, PLACE_HEIGHT[0], true);
                 if (timer.get() > 0.1) {
                     timer.reset();
-                    autoDone = true;
+                    // TODO advance
                 }
                 break;
         }
