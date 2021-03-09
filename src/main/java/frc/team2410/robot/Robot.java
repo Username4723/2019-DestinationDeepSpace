@@ -1,23 +1,17 @@
 package frc.team2410.robot;
 
-import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team2410.robot.control.auto.AutoController;
-import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.control.Climb;
 import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
-import frc.team2410.robot.control.auto.AutoState;
+import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.mechanics.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static frc.team2410.robot.RobotMap.*;
 
 public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain;
@@ -30,14 +24,7 @@ public class Robot extends TimedRobot {
 	public static Climb climb;
 	public static LED led;
 	static boolean fieldOriented = true;
-	private float smp;
-	private float smi;
-	private float smd;
-	private double gp;
-	private double gi;
-	private double gd;
 	private boolean startMatch = true;
-	private int pState = -1;
 
 	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
 	public static GameState currentState;
@@ -62,20 +49,6 @@ public class Robot extends TimedRobot {
 		registerLogicController(GameState.TELEOP, intake);
 		registerLogicController(GameState.TELEOP, elevator);
 		registerLogicController(GameState.TELEOP, climb);
-
-		//Put PID changers so we don't have to push code every tune
-		smp = RobotMap.SWERVE_MODULE_P;
-		smi = RobotMap.SWERVE_MODULE_I;
-		smd = RobotMap.SWERVE_MODULE_D;
-		gp = GYRO_P;
-		gi = GYRO_I;
-		gd = GYRO_D;
-		SmartDashboard.putNumber("swerve p", smp);
-		SmartDashboard.putNumber("swerve i", smi);
-		SmartDashboard.putNumber("swerve d", smd);
-		SmartDashboard.putNumber("gyro p", gp);
-		SmartDashboard.putNumber("gyro i", gi);
-		SmartDashboard.putNumber("gyro d", gd);
 	}
 
 	private void registerLogicController(GameState state, LogicController controller) {
@@ -134,7 +107,6 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		elevator.reset(0);
 		led.setColor(0, 0, 255);
-		pState = -1;
 		startMatch = true;
 		semiAuto.t.reset();
 		semiAuto.t.start();
@@ -177,15 +149,5 @@ public class Robot extends TimedRobot {
 		}
 
 		SmartDashboard.putNumber("LED Speed", 10 + (int) (10 * Math.sqrt(oi.getX() * oi.getX() + oi.getY() * oi.getY()) * oi.getSlider()));
-
-		//Set PIDs from dashboard (probably shouldn't be doing this but it doesn't really hurt anything)
-		/*smp = (float)SmartDashboard.getNumber("swerve p", 0.0);
-		smi = (float)SmartDashboard.getNumber("swerve i", 0.0);
-		smd = (float)SmartDashboard.getNumber("swerve d", 0.0);
-		gp = SmartDashboard.getNumber("gyro p", 0.0);
-		gi = SmartDashboard.getNumber("gyro i", 0.0);
-		gd = SmartDashboard.getNumber("gyro d", 0.0);
-		drivetrain.setGyroPID(gp, gi, gd);
-		drivetrain.setPID(smp, smi, smd);*/
 	}
 }
