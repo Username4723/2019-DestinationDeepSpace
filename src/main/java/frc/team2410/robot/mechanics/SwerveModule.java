@@ -3,9 +3,7 @@ package frc.team2410.robot.mechanics;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
 import static frc.team2410.robot.RobotMap.*;
 
 public class SwerveModule {
@@ -53,8 +51,6 @@ public class SwerveModule {
 			currentSpeed += 0.04;
 		}
 
-		putNumber("Distance", dist);
-
 		// Buffer for zeroing
 		if (this.getAngle() < 1 || this.getAngle() > 359) {
 			zeroing = false;
@@ -68,7 +64,6 @@ public class SwerveModule {
 
 	void returnToZero() {
 		this.pid.setSetpoint(offset);
-		SmartDashboard.putNumber("Setpoint", this.pid.getSetpoint());
 		zeroing = true;
 	}
 
