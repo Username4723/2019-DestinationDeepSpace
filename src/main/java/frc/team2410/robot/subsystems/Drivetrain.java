@@ -1,4 +1,4 @@
-package frc.team2410.robot.Subsystems;
+package frc.team2410.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PIDController;
 import frc.team2410.robot.NumericalPIDOutput;

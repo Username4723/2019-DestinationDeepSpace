@@ -1,4 +1,4 @@
-package frc.team2410.robot.Subsystems;
+package frc.team2410.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import net.bak3dnet.robotics.led.LightDrive12;

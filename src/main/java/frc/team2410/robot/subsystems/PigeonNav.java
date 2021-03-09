@@ -1,4 +1,4 @@
-package frc.team2410.robot.Subsystems;
+package frc.team2410.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.PIDSource;
