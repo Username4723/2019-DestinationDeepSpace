@@ -1,9 +1,6 @@
 package frc.team2410.robot;
 
-import jdk.jfr.Unsigned;
-
-public class RobotMap
-{
+public class RobotMap {
 	public static final boolean COMPETITION_BOT = true;
 
 	//PID
@@ -101,8 +98,8 @@ public class RobotMap
 	public static final double ROCKET_LEFT_FRONT = 90;
 	public static final double ROCKET_LEFT_RIGHT = 90.0 + 61.25;
 	public static final double ROCKET_LEFT_LEFT = 90 - 61.25;
-	public static final double [] ROCKET_SIDE_ANGLES = {ROCKET_RIGHT_FRONT, ROCKET_LEFT_FRONT};
-	public static final double [] ROCKET_HATCH_ANGLES = {ROCKET_LEFT_LEFT, ROCKET_LEFT_RIGHT, ROCKET_RIGHT_LEFT, ROCKET_RIGHT_RIGHT};
+	public static final double[] ROCKET_SIDE_ANGLES = {ROCKET_RIGHT_FRONT, ROCKET_LEFT_FRONT};
+	public static final double[] ROCKET_HATCH_ANGLES = {ROCKET_LEFT_LEFT, ROCKET_LEFT_RIGHT, ROCKET_RIGHT_LEFT, ROCKET_RIGHT_RIGHT};
 
 	//Encoder Conversions
 	//Diameter * PI / gear ratio / full encoder cycles (edges/4)

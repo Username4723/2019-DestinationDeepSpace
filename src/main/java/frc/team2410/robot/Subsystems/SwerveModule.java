@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
 import static frc.team2410.robot.RobotMap.*;
 
-public class SwerveModule
-{
-	private WPI_TalonSRX drive;
-	private float offset;
-	private float currentSpeed;
-	private PIDController pid;
+public class SwerveModule {
+	private final WPI_TalonSRX drive;
+	private final float offset;
+	private final PIDController pid;
 	public AnalogInput positionEncoder;
+	private float currentSpeed;
 	private boolean zeroing;
 
 	SwerveModule(int steerMotor, int driveMotor, int encoder, float offset, boolean isInverted) {
