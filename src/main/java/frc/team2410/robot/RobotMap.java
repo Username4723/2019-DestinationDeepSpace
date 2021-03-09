@@ -1,7 +1,6 @@
 package frc.team2410.robot;
 
 public class RobotMap {
-	public static final boolean COMPETITION_BOT = true;
 
 	//PID
 	public static final float SWERVE_MODULE_P = 5;
@@ -43,35 +42,26 @@ public class RobotMap {
 	public static final int ELEVATOR_ENCODER_B_COMP = 9;
 	public static final int CLIMB_ELEVATOR_A_COMP = 0;
 	public static final int CLIMB_ELEVATOR_B_COMP = 1;
-	public static final int ELEVATOR_ENCODER_A_PRAC = 0;
-	public static final int ELEVATOR_ENCODER_B_PRAC = 1;
-	public static final int CLIMB_ELEVATOR_A_PRAC = 6;
-	public static final int CLIMB_ELEVATOR_B_PRAC = 9;
-	public static final int ELEVATOR_ENCODER_A = COMPETITION_BOT ? ELEVATOR_ENCODER_A_COMP : ELEVATOR_ENCODER_A_PRAC;
-	public static final int ELEVATOR_ENCODER_B = COMPETITION_BOT ? ELEVATOR_ENCODER_B_COMP : ELEVATOR_ENCODER_B_PRAC;
-	public static final int CLIMB_ELEVATOR_A = COMPETITION_BOT ? CLIMB_ELEVATOR_A_COMP : CLIMB_ELEVATOR_A_PRAC;
-	public static final int CLIMB_ELEVATOR_B = COMPETITION_BOT ? CLIMB_ELEVATOR_B_COMP : CLIMB_ELEVATOR_B_PRAC;
+	public static final int ELEVATOR_ENCODER_A = ELEVATOR_ENCODER_A_COMP;
+	public static final int ELEVATOR_ENCODER_B = ELEVATOR_ENCODER_B_COMP;
+	public static final int CLIMB_ELEVATOR_A = CLIMB_ELEVATOR_A_COMP;
+	public static final int CLIMB_ELEVATOR_B = CLIMB_ELEVATOR_B_COMP;
 
 	//PCM
 	public static final int HATCH_INTAKE_FORWARD = 1;
 	public static final int HATCH_INTAKE_REVERSE = 0;
 
 	//Offsets
-	public static final float BR_OFFSET_PRAC = 2.369384523f;
-	public static final float BL_OFFSET_PRAC = 0.731201097f;
-	public static final float FR_OFFSET_PRAC = 3.286132476f;
-	public static final float FL_OFFSET_PRAC = 1.716308418f;
-	public static final float WRIST_OFFSET_PRAC = 2.7514645620000002f;
 	public static final float BR_OFFSET_COMP = 2.4316403760000003f;
 	public static final float BL_OFFSET_COMP = 1.8701169960000001f;
 	public static final float FR_OFFSET_COMP = 0.797119059f;
 	public static final float FL_OFFSET_COMP = 1.666259595f;
 	public static final float WRIST_OFFSET_COMP = 4.06494099f;
-	public static final float BR_OFFSET = COMPETITION_BOT ? BR_OFFSET_COMP : BR_OFFSET_PRAC;
-	public static final float BL_OFFSET = COMPETITION_BOT ? BL_OFFSET_COMP : BL_OFFSET_PRAC;
-	public static final float FR_OFFSET = COMPETITION_BOT ? FR_OFFSET_COMP : FR_OFFSET_PRAC;
-	public static final float FL_OFFSET = COMPETITION_BOT ? FL_OFFSET_COMP : FL_OFFSET_PRAC;
-	public static final float WRIST_OFFSET = COMPETITION_BOT ? WRIST_OFFSET_COMP : WRIST_OFFSET_PRAC;
+	public static final float BR_OFFSET = BR_OFFSET_COMP;
+	public static final float BL_OFFSET = BL_OFFSET_COMP;
+	public static final float FR_OFFSET = FR_OFFSET_COMP;
+	public static final float FL_OFFSET = FL_OFFSET_COMP;
+	public static final float WRIST_OFFSET = WRIST_OFFSET_COMP;
 
 	//Elevator Heights
 	public static final double TRAVEL_HEIGHT = 2;
