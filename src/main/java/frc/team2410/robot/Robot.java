@@ -7,6 +7,9 @@ import frc.team2410.robot.control.Climb;
 import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
 import frc.team2410.robot.control.auto.AutoController;
+import frc.team2410.robot.control.teleop.TeleOpController;
+import frc.team2410.robot.input.DefaultInput;
+import frc.team2410.robot.input.InputManager;
 import frc.team2410.robot.mechanics.*;
 import frc.team2410.robot.robots.DefaultRobot;
 
@@ -19,6 +22,7 @@ public class Robot extends TimedRobot {
 	public Drivetrain drivetrain;
 	public PigeonNav gyro;
 	public UserInput userInput;
+	public InputManager inputManager;
 	public Vision vision;
 	public SemiAuto semiAuto;
 	public Elevator elevator;
@@ -41,6 +45,7 @@ public class Robot extends TimedRobot {
 		gyro = new PigeonNav();
 		drivetrain = new Drivetrain(this);
 		userInput = new UserInput(this);
+		inputManager = new DefaultInput();
 		vision = new Vision();
 		semiAuto = new SemiAuto(this);
 		elevator = new Elevator(this);
@@ -49,6 +54,7 @@ public class Robot extends TimedRobot {
 		led.setColor(0, 0, 255);
 
 		registerLogicController(GameState.AUTONOMOUS, new AutoController(this));
+		registerLogicController(GameState.TELEOP, new TeleOpController(this));
 		registerLogicController(GameState.TELEOP, intake);
 		registerLogicController(GameState.TELEOP, elevator);
 		registerLogicController(GameState.TELEOP, climb);
@@ -135,7 +141,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		//Run subsystem loops
-		userInput.pollButtons();
 		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::loop);
 		drivetrain.joystickDrive(fieldOriented);
 
