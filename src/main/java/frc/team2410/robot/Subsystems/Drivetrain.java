@@ -132,13 +132,4 @@ public class Drivetrain {
 	public double wrap(double num, double max, double min) {
 		return (num - min) - (max - min) * Math.floor((num - min) / (max - min)) + min;
 	}
-
-	public void startTravel() {
-		//driveEnc.reset();
-	}
-
-	public double getTravel() {
-		//return Math.abs(driveEnc.getDistance())
-		return 0;
-	}
 }
