@@ -7,12 +7,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import static frc.team2410.robot.RobotMap.*;
 
 public class UserInput {
+	private Robot robot;
+
 	private final boolean[][] canPress = new boolean[2][12];
 	private final GenericHID[] controllers = new GenericHID[2];
 	private final Joystick joy;
 	private final XboxController xbox;
 
-	UserInput() {
+	UserInput(Robot robot) {
+		this.robot = robot;
+
 		joy = new Joystick(0);
 		xbox = new XboxController(1);
 		controllers[0] = joy;
@@ -21,99 +25,99 @@ public class UserInput {
 
 	void pollButtons() {
 		if (joy.getRawButton(5)) {
-			Robot.drivetrain.returnWheelsToZero();
+			robot.drivetrain.returnWheelsToZero();
 		}
 
 		if (joy.getRawButton(6)) {
-			Robot.drivetrain.resetHeading(0);
+			robot.drivetrain.resetHeading(0);
 		} else if (joy.getRawButton(7)) {
-			Robot.drivetrain.resetHeading(180);
+			robot.drivetrain.resetHeading(180);
 		}
 
 		boolean resetPlace = true;
 
 		if (joy.getRawButton(11)) {
-			Robot.semiAuto.turnToNearestAngle(180);
+			robot.semiAuto.turnToNearestAngle(180);
 			resetPlace = false;
 		} else if (joy.getRawButton(9)) {
-			Robot.semiAuto.turnToNearestAngle(0);
+			robot.semiAuto.turnToNearestAngle(0);
 			resetPlace = false;
 		} else if (joy.getRawButton(12)) {
-			Robot.semiAuto.turnToNearestAngle(ROCKET_SIDE_ANGLES);
+			robot.semiAuto.turnToNearestAngle(ROCKET_SIDE_ANGLES);
 			resetPlace = false;
 		} else if (joy.getRawButton(10)) {
-			Robot.semiAuto.turnToNearestAngle(ROCKET_HATCH_ANGLES);
+			robot.semiAuto.turnToNearestAngle(ROCKET_HATCH_ANGLES);
 			resetPlace = false;
 		} else {
-			Robot.semiAuto.reng = false;
+			robot.semiAuto.reng = false;
 		}
 
-		Robot.fieldOriented = !joy.getRawButton(2);
+		robot.fieldOriented = !joy.getRawButton(2);
 
 		if (xbox.getRawButton(7)) {
-			Robot.intake.setIntake(false);
+			robot.intake.setIntake(false);
 		} else if (xbox.getRawButton(8)) {
-			Robot.intake.setIntake(true);
+			robot.intake.setIntake(true);
 		} else {
-			Robot.intake.stopIntake();
+			robot.intake.stopIntake();
 		}
 
 		if (leadingEdge(true, 1)) {
-			Robot.intake.toggleHatch();
+			robot.intake.toggleHatch();
 		}
 
 		if (leadingEdge(false, 9)) {
-			Robot.climb.reset(0);
+			robot.climb.reset(0);
 		}
 
-		leadingEdge(false, 10);//Robot.elevator.reset(0);
+		leadingEdge(false, 10);//robot.elevator.reset(0);
 
 		if (joy.getRawButton(3)) {
-			Robot.semiAuto.climb(0);
+			robot.semiAuto.climb(0);
 		} else if (joy.getRawButton(4)) {
-			Robot.semiAuto.climb(1);
+			robot.semiAuto.climb(1);
 		} else {
-			Robot.semiAuto.reset(false);
-			if (Robot.semiAuto.lift) {
-				Robot.elevator.moveTo(Robot.semiAuto.pFrontPos);
-				Robot.climb.moveTo(Robot.semiAuto.pBackPos);
-				Robot.semiAuto.lift = false;
+			robot.semiAuto.reset(false);
+			if (robot.semiAuto.lift) {
+				robot.elevator.moveTo(robot.semiAuto.pFrontPos);
+				robot.climb.moveTo(robot.semiAuto.pBackPos);
+				robot.semiAuto.lift = false;
 			}
 		}
 
 		if (leadingEdge(false, 5)) {
-			Robot.semiAuto.elevatorSetpoint(TRAVEL_ANGLE, TRAVEL_HEIGHT, true);
-			Robot.intake.setHatch(false);
+			robot.semiAuto.elevatorSetpoint(TRAVEL_ANGLE, TRAVEL_HEIGHT, true);
+			robot.intake.setHatch(false);
 		} else if (leadingEdge(false, 6)) {
-			Robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, INTAKE_HEIGHT, true);
-			Robot.intake.setHatch(true);
+			robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, INTAKE_HEIGHT, true);
+			robot.intake.setHatch(true);
 		}
 
 
 		if (xbox.getRawButton(1)) {
-			Robot.elevator.moveTo(PLACE_HEIGHT[0]);
+			robot.elevator.moveTo(PLACE_HEIGHT[0]);
 		} else if (xbox.getRawButton(4)) {
-			Robot.elevator.moveTo(PLACE_HEIGHT[1]);
+			robot.elevator.moveTo(PLACE_HEIGHT[1]);
 		} else if (xbox.getRawButton(3)) {
-			Robot.elevator.moveTo(PLACE_HEIGHT[2]);
-			Robot.intake.moveWristTo(HATCH_LEVEL_THREE_WRIST);
+			robot.elevator.moveTo(PLACE_HEIGHT[2]);
+			robot.intake.moveWristTo(HATCH_LEVEL_THREE_WRIST);
 		} else if (xbox.getRawButton(2)) {
-			Robot.elevator.moveTo(CARGO_LOADING_STATION_HEIGHT);
-			Robot.intake.moveWristTo(CARGO_LOADING_STATION_ANGLE);
+			robot.elevator.moveTo(CARGO_LOADING_STATION_HEIGHT);
+			robot.intake.moveWristTo(CARGO_LOADING_STATION_ANGLE);
 		}
 
 		if (xbox.getPOV() == 0) {
-			Robot.intake.moveWristTo(CARGO_WRIST_ANGLE);
+			robot.intake.moveWristTo(CARGO_WRIST_ANGLE);
 		} else if (xbox.getPOV() == 90) {
-			Robot.intake.moveWristTo(HATCH_WRIST_ANGLE);
+			robot.intake.moveWristTo(HATCH_WRIST_ANGLE);
 		} else if (xbox.getPOV() == 270) {
-			Robot.intake.moveWristTo(WRIST_UP);
+			robot.intake.moveWristTo(WRIST_UP);
 		} else if (xbox.getPOV() == 180) {
-			Robot.intake.moveWristTo(CARGO_WRIST_DOWN_ANGLE);
+			robot.intake.moveWristTo(CARGO_WRIST_DOWN_ANGLE);
 		}
 
 		if (resetPlace) {
-			Robot.semiAuto.reset(true);
+			robot.semiAuto.reset(true);
 		}
 	}
 

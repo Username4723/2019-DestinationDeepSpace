@@ -8,13 +8,17 @@ import frc.team2410.robot.Robot;
 import static frc.team2410.robot.RobotMap.*;
 
 public class Climb implements LogicController {
+	private Robot robot;
+
 	private final WPI_TalonSRX winchMotor;
 	private final Encoder heightEncoder;
 
 	private double targetHeight;
 	private double offset;
 
-	public Climb() {
+	public Climb(Robot robot) {
+		this.robot = robot;
+
 		winchMotor = new WPI_TalonSRX(CLIMB_ELEVATOR);
 		heightEncoder = new Encoder(CLIMB_ELEVATOR_A, CLIMB_ELEVATOR_B);
 		winchMotor.setInverted(true);
@@ -43,15 +47,15 @@ public class Climb implements LogicController {
 	}
 
 	public void loop() {
-		if (Robot.userInput.getJoyPOV() != 0 && Robot.userInput.getJoyPOV() != 180 && !Robot.semiAuto.lift) {
+		if (robot.userInput.getJoyPOV() != 0 && robot.userInput.getJoyPOV() != 180 && !robot.semiAuto.lift) {
 			double speed = -(targetHeight - getPosition());
 			if (speed > 0) speed /= 15;
 			if (speed < -1) speed = -1;
 			if (speed > 1) speed = 1;
 			winchMotor.set(speed);
-		} else if (!Robot.semiAuto.lift) {
-			if (!(getPosition() < 0) || Robot.userInput.getJoyPOV() != 0)
-				winchMotor.set(Robot.userInput.getJoyPOV() == 0 ? Robot.userInput.getSlider() : -Robot.userInput.getSlider());
+		} else if (!robot.semiAuto.lift) {
+			if (!(getPosition() < 0) || robot.userInput.getJoyPOV() != 0)
+				winchMotor.set(robot.userInput.getJoyPOV() == 0 ? robot.userInput.getSlider() : -robot.userInput.getSlider());
 			else winchMotor.set(0);
 			targetHeight = getPosition();
 		}

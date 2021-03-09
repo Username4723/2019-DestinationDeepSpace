@@ -14,20 +14,20 @@ import java.util.List;
 import java.util.Map;
 
 public class Robot extends TimedRobot {
-	public static Drivetrain drivetrain;
-	public static PigeonNav gyro;
-	public static UserInput userInput;
-	public static Vision vision;
-	public static SemiAuto semiAuto;
-	public static Elevator elevator;
-	public static Intake intake;
-	public static Climb climb;
-	public static LED led;
-	static boolean fieldOriented = true;
+	public Drivetrain drivetrain;
+	public PigeonNav gyro;
+	public UserInput userInput;
+	public Vision vision;
+	public SemiAuto semiAuto;
+	public Elevator elevator;
+	public Intake intake;
+	public Climb climb;
+	public LED led;
+	public boolean fieldOriented = true;
 	private boolean startMatch = true;
 
 	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
-	public static GameState currentState;
+	public GameState currentState;
 
 	public Robot() {
 	}
@@ -36,16 +36,16 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		//Create subsystems
 		gyro = new PigeonNav();
-		drivetrain = new Drivetrain();
-		userInput = new UserInput();
+		drivetrain = new Drivetrain(this);
+		userInput = new UserInput(this);
 		vision = new Vision();
-		semiAuto = new SemiAuto();
-		elevator = new Elevator();
-		climb = new Climb();
+		semiAuto = new SemiAuto(this);
+		elevator = new Elevator(this);
+		climb = new Climb(this);
 		led = new LED();
 		led.setColor(0, 0, 255);
 
-		registerLogicController(GameState.AUTONOMOUS, new AutoController());
+		registerLogicController(GameState.AUTONOMOUS, new AutoController(this));
 		registerLogicController(GameState.TELEOP, intake);
 		registerLogicController(GameState.TELEOP, elevator);
 		registerLogicController(GameState.TELEOP, climb);

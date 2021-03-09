@@ -8,6 +8,8 @@ import frc.team2410.robot.Robot;
 import static frc.team2410.robot.RobotMap.*;
 
 public class Drivetrain {
+	private Robot robot;
+
 	private final PIDController gyroPID;
 	public double desiredHeading;
 	public SwerveModule fl;
@@ -16,16 +18,18 @@ public class Drivetrain {
 	public SwerveModule br;
 	private double pHead = 0; // Previous heading
 
-	public Drivetrain() {
+	public Drivetrain(Robot robot) {
+		this.robot = robot;
+
 		this.fl = new SwerveModule(FRONT_LEFT_STEER, FRONT_LEFT_DRIVE, FL_STEER_ENCODER, FL_OFFSET, true);
 		this.fr = new SwerveModule(FRONT_RIGHT_STEER, FRONT_RIGHT_DRIVE, FR_STEER_ENCODER, FR_OFFSET, false);
 		this.bl = new SwerveModule(BACK_LEFT_STEER, BACK_LEFT_DRIVE, BL_STEER_ENCODER, BL_OFFSET, true);
 		this.br = new SwerveModule(BACK_RIGHT_STEER, BACK_RIGHT_DRIVE, BR_STEER_ENCODER, BR_OFFSET, false);
-		this.desiredHeading = Robot.gyro.getHeading();
+		this.desiredHeading = robot.gyro.getHeading();
 		//this.driveEnc = new Encoder(DRIVE_CIMCODER_A, DRIVE_CIMCODER_B);
 		//this.driveEnc.setDistancePerPulse(DRIVE_DIST_PER_PULSE);\
 
-		this.gyroPID = new PIDController(GYRO_P, GYRO_I, GYRO_D, Robot.gyro, new NumericalPIDOutput(), 0.002);
+		this.gyroPID = new PIDController(GYRO_P, GYRO_I, GYRO_D, robot.gyro, new NumericalPIDOutput(), 0.002);
 		gyroPID.setInputRange(-180, 180);
 		gyroPID.setOutputRange(-0.3, 0.3);
 		gyroPID.setContinuous(true);
@@ -33,13 +37,13 @@ public class Drivetrain {
 	}
 
 	public void resetHeading(int head) {
-		Robot.gyro.resetHeading(head);
+		robot.gyro.resetHeading(head);
 		desiredHeading = head;
 	}
 
 	public void joystickDrive(boolean fieldOriented) {
-		double speedMultiplier = Robot.userInput.getSlider();
-		crabDrive(Robot.userInput.getX(), Robot.userInput.getY(), Robot.userInput.getTwist(), speedMultiplier, fieldOriented);
+		double speedMultiplier = robot.userInput.getSlider();
+		crabDrive(robot.userInput.getX(), robot.userInput.getY(), robot.userInput.getTwist(), speedMultiplier, fieldOriented);
 	}
 
 	public void returnWheelsToZero() {
@@ -58,7 +62,7 @@ public class Drivetrain {
 
 	public void crabDrive(double x, double y, double rotation, double speedMultiplier, boolean useGyro) {
 		double forward, strafe;
-		double heading = Robot.gyro.getHeading() * Math.PI / 180; //Degrees -> Radians
+		double heading = robot.gyro.getHeading() * Math.PI / 180; //Degrees -> Radians
 		if (useGyro) {
 			forward = -x * Math.sin(heading) + y * Math.cos(heading);
 			strafe = x * Math.cos(heading) + y * Math.sin(heading);
@@ -68,14 +72,14 @@ public class Drivetrain {
 		}
 
 		// Sets desired heading dependant if gyro still moving
-		if ((rotation == 0 && Math.abs(pHead - Robot.gyro.getHeading()) < 1) || Robot.semiAuto.reng || Robot.currentState == GameState.AUTONOMOUS) {
+		if ((rotation == 0 && Math.abs(pHead - robot.gyro.getHeading()) < 1) || robot.semiAuto.reng || robot.currentState == GameState.AUTONOMOUS) {
 			gyroPID.setSetpoint(desiredHeading);
 			rotation = -gyroPID.get();
 		} else {
-			desiredHeading = Robot.gyro.getHeading();
+			desiredHeading = robot.gyro.getHeading();
 			desiredHeading = wrap(desiredHeading, 180, -180);
 		}
-		pHead = Robot.gyro.getHeading();
+		pHead = robot.gyro.getHeading();
 
 		if (x != 0 || y != 0 || rotation != 0) {
 			double back, front, right, left;

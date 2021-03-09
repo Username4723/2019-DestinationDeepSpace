@@ -6,6 +6,7 @@ import frc.team2410.robot.Robot;
 import static frc.team2410.robot.RobotMap.*;
 
 public class SemiAuto {
+	private Robot robot;
 
 	public int placeState = 0;
 	public Timer t;
@@ -19,10 +20,11 @@ public class SemiAuto {
 	private int climbState = 0;
 
 
-	public SemiAuto() {
+	public SemiAuto(Robot robot) {
+		this.robot = robot;
 
 		t = new Timer();
-		targetAngle = Robot.gyro.getHeading();
+		targetAngle = robot.gyro.getHeading();
 	}
 
 	public void reset(boolean place) {
@@ -37,9 +39,9 @@ public class SemiAuto {
 	}
 
 	public boolean startMatch() {
-		Robot.intake.moveWristTo(TRAVEL_ANGLE + ((WRIST_UP - TRAVEL_ANGLE) * (1 - (t.get() / 2))));
-		if (Math.abs(Robot.intake.getAngle() - TRAVEL_ANGLE) < 5) {
-			Robot.intake.toggleHatch();
+		robot.intake.moveWristTo(TRAVEL_ANGLE + ((WRIST_UP - TRAVEL_ANGLE) * (1 - (t.get() / 2))));
+		if (Math.abs(robot.intake.getAngle() - TRAVEL_ANGLE) < 5) {
+			robot.intake.toggleHatch();
 			t.stop();
 			return true;
 		}
@@ -49,14 +51,14 @@ public class SemiAuto {
 	public void turnToNearestAngle(double angle) {
 		reng = true;
 		engaged = true;
-		Robot.drivetrain.desiredHeading = angle;
+		robot.drivetrain.desiredHeading = angle;
 	}
 
 	public void turnToNearestAngle(double[] angles) {
 		reng = true;
 		engaged = true;
 
-		double angle = Robot.gyro.getHeading();
+		double angle = robot.gyro.getHeading();
 		double lowestOffset = 180;
 		double target = 0;
 
@@ -68,13 +70,13 @@ public class SemiAuto {
 			}
 		}
 
-		Robot.drivetrain.desiredHeading = target;
+		robot.drivetrain.desiredHeading = target;
 	}
 
 	private void lift(int level) {
-		Robot.climb.moveTo(CLIMB_HEIGHT[level] + CLIMB_ELEVATOR_MAX_OFFSET);
+		robot.climb.moveTo(CLIMB_HEIGHT[level] + CLIMB_ELEVATOR_MAX_OFFSET);
 
-		if (elevatorSetpoint(CLIMB_WRIST_ANGLE[1], CLIMB_HEIGHT[level] - Robot.climb.getPosition(), true)) {
+		if (elevatorSetpoint(CLIMB_WRIST_ANGLE[1], CLIMB_HEIGHT[level] - robot.climb.getPosition(), true)) {
 			//Robot.elevator.setIntake(false);
 		}
 	}
@@ -103,10 +105,10 @@ public class SemiAuto {
 	}
 
 	public boolean elevatorSetpoint(double wristAngle, double elevatorHeight, boolean sameTime) {
-		boolean elevatorAt = Math.abs(Robot.elevator.getPosition() - elevatorHeight) < 3;
-		boolean wristAt = Math.abs(Robot.intake.getAngle() - wristAngle) < 5;
-		if (elevatorAt || sameTime) Robot.intake.moveWristTo(wristAngle);
-		Robot.elevator.moveTo(elevatorHeight);
+		boolean elevatorAt = Math.abs(robot.elevator.getPosition() - elevatorHeight) < 3;
+		boolean wristAt = Math.abs(robot.intake.getAngle() - wristAngle) < 5;
+		if (elevatorAt || sameTime) robot.intake.moveWristTo(wristAngle);
+		robot.elevator.moveTo(elevatorHeight);
 		return elevatorAt && wristAt;
 	}
 }

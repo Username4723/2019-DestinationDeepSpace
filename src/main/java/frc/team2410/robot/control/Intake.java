@@ -12,6 +12,8 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 import static frc.team2410.robot.RobotMap.*;
 
 public class Intake implements LogicController {
+	private Robot robot;
+
 	private final DoubleSolenoid solenoid;
 	private final WPI_TalonSRX wrist;
 	private final AnalogInput wristEncoder;
@@ -19,7 +21,9 @@ public class Intake implements LogicController {
 	WPI_TalonSRX wheels;
 	private boolean open = true;
 
-	public Intake() {
+	public Intake(Robot robot) {
+		this.robot = robot;
+
 		wheels = new WPI_TalonSRX(INTAKE_MOTOR);
 		solenoid = new DoubleSolenoid(PCM, HATCH_INTAKE_FORWARD, HATCH_INTAKE_REVERSE);
 		wrist = new WPI_TalonSRX(WRIST_MOTOR);
@@ -95,7 +99,7 @@ public class Intake implements LogicController {
 	}
 
 	public void loop() {
-		double wristStick = Robot.userInput.getAnalogStick(false, true);
+		double wristStick = robot.userInput.getAnalogStick(false, true);
 		if (wristStick != 0) {
 			pid.disable();
 			setWrist(-wristStick);

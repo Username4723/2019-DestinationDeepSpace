@@ -8,6 +8,8 @@ import frc.team2410.robot.TalonPair;
 import static frc.team2410.robot.RobotMap.*;
 
 public class Elevator implements LogicController {
+	private Robot robot;
+
 	private final Encoder heightEncoder;
 	public TalonPair winchMotor;
 	private double targetHeight;
@@ -15,7 +17,9 @@ public class Elevator implements LogicController {
 	private boolean checkStartReleased = false;
 
 
-	public Elevator() {
+	public Elevator(Robot robot) {
+		this.robot = robot;
+
 		winchMotor = new TalonPair(ELEVATOR_A, ELEVATOR_B, true, false);
 		heightEncoder = new Encoder(ELEVATOR_ENCODER_A, ELEVATOR_ENCODER_B);
 		heightEncoder.setDistancePerPulse(WINCH_DIST_PER_PULSE);
@@ -41,21 +45,21 @@ public class Elevator implements LogicController {
 	}
 
 	public void loop() {
-		double elevatorStick = Robot.userInput.getAnalogStick(true, true);
-		if (Robot.userInput.startPressed()) {
+		double elevatorStick = robot.userInput.getAnalogStick(true, true);
+		if (robot.userInput.startPressed()) {
 			winchMotor.set(0.2);
 			checkStartReleased = true;
 		} else if (checkStartReleased) {
 			winchMotor.set(0);
 			reset(0);
 			checkStartReleased = false;
-		} else if (elevatorStick == 0 && !Robot.semiAuto.lift) {
+		} else if (elevatorStick == 0 && !robot.semiAuto.lift) {
 			double speed = -((targetHeight - getPosition()) / 4.50);
-			if (speed > 0 && !Robot.semiAuto.ceng) speed /= 10.0;
+			if (speed > 0 && !robot.semiAuto.ceng) speed /= 10.0;
 			if (speed < -1) speed = -1;
 			if (speed > 1) speed = 1;
 			winchMotor.set(speed);
-		} else if (!Robot.semiAuto.lift && !(getPosition() < 0.5 && elevatorStick > 0) && !(getPosition() > 60 && elevatorStick < 0)) {
+		} else if (!robot.semiAuto.lift && !(getPosition() < 0.5 && elevatorStick > 0) && !(getPosition() > 60 && elevatorStick < 0)) {
 			winchMotor.set(elevatorStick);
 			targetHeight = getPosition();
 		}

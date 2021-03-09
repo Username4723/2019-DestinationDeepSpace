@@ -8,9 +8,15 @@ import frc.team2410.robot.Robot;
 import static frc.team2410.robot.RobotMap.*;
 
 public class AutoController implements LogicController {
+    private Robot robot;
+
     public Timer timer;
     private AutoState autoState = AutoState.CARGOSHIP_LEFT;
     private int state = 0;
+
+    public AutoController(Robot robot) {
+        this.robot = robot;
+    }
 
     public void init() {
         state = 0;
@@ -42,14 +48,14 @@ public class AutoController implements LogicController {
             case 0:
                 timer.reset();
                 timer.start();
-                Robot.drivetrain.desiredHeading = 0;
+                robot.drivetrain.desiredHeading = 0;
                 state++;
                 break;
             case 1:
                 // Drive to cargoship
-                Robot.drivetrain.crabDrive(left ? -STRAFE_SPEED : STRAFE_SPEED, 0.8, 0, 1, true);
+                robot.drivetrain.crabDrive(left ? -STRAFE_SPEED : STRAFE_SPEED, 0.8, 0, 1, true);
                 if (timer.get() > 2.125) {
-                    Robot.drivetrain.brake();
+                    robot.drivetrain.brake();
                     timer.reset();
                     timer.start();
                     state++;
@@ -57,7 +63,7 @@ public class AutoController implements LogicController {
                 break;
             case 2:
                 // Raise elevator and extend wrist
-                Robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, PLACE_HEIGHT[0], true);
+                robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, PLACE_HEIGHT[0], true);
                 if (timer.get() > 0.1) {
                     timer.reset();
                     timer.start();
@@ -78,10 +84,10 @@ public class AutoController implements LogicController {
                 break;
             case 1:
                 // Drive off hab
-                Robot.drivetrain.crabDrive(0, 0.85, 0, 1, true);
+                robot.drivetrain.crabDrive(0, 0.85, 0, 1, true);
                 if (timer.get() > 1.6) {
-                    Robot.drivetrain.brake();
-                    Robot.drivetrain.desiredHeading = left ? ROCKET_LEFT_LEFT : ROCKET_RIGHT_RIGHT;
+                    robot.drivetrain.brake();
+                    robot.drivetrain.desiredHeading = left ? ROCKET_LEFT_LEFT : ROCKET_RIGHT_RIGHT;
                     timer.reset();
                     timer.start();
                     state++;
@@ -89,9 +95,9 @@ public class AutoController implements LogicController {
                 break;
             case 2:
                 // Drive to rocket
-                Robot.drivetrain.crabDrive(left ? -X_SPEED : X_SPEED, 0.65, 0, 1, true);
+                robot.drivetrain.crabDrive(left ? -X_SPEED : X_SPEED, 0.65, 0, 1, true);
                 if (timer.get() > 2.125) {
-                    Robot.drivetrain.brake();
+                    robot.drivetrain.brake();
                     timer.reset();
                     timer.start();
                     state++;
@@ -99,7 +105,7 @@ public class AutoController implements LogicController {
                 break;
             case 3:
                 // Raise elevator and extend wrist
-                Robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, PLACE_HEIGHT[0], true);
+                robot.semiAuto.elevatorSetpoint(HATCH_WRIST_ANGLE, PLACE_HEIGHT[0], true);
                 if (timer.get() > 0.1) {
                     timer.reset();
                     // TODO advance
