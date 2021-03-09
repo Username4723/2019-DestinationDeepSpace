@@ -1,4 +1,4 @@
-package frc.team2410.robot.subsystems;
+package frc.team2410.robot.control;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

@@ -1,4 +1,4 @@
-package frc.team2410.robot.subsystems;
+package frc.team2410.robot.control;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;

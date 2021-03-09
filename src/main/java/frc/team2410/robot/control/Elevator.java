@@ -1,4 +1,4 @@
-package frc.team2410.robot.subsystems;
+package frc.team2410.robot.control;
 
 import edu.wpi.first.wpilibj.Encoder;
 import frc.team2410.robot.Robot;

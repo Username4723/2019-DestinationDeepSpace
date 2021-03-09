@@ -3,7 +3,11 @@ package frc.team2410.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team2410.robot.subsystems.*;
+import frc.team2410.robot.control.Autonomous;
+import frc.team2410.robot.control.Climb;
+import frc.team2410.robot.control.Elevator;
+import frc.team2410.robot.control.Intake;
+import frc.team2410.robot.mechanics.*;
 
 import static frc.team2410.robot.RobotMap.*;
 

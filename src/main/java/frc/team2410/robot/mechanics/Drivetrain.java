@@ -1,4 +1,4 @@
-package frc.team2410.robot.subsystems;
+package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.wpilibj.PIDController;
 import frc.team2410.robot.NumericalPIDOutput;
@@ -48,7 +48,7 @@ public class Drivetrain {
 		this.br.returnToZero();
 	}
 
-	void brake() {
+	public void brake() {
 		this.fl.drive(0, 0);
 		this.fr.drive(0, 0);
 		this.bl.drive(0, 0);
