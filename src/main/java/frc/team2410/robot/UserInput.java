@@ -23,15 +23,15 @@ public class UserInput {
 	}
 
 	public double getX() {
-		return this.applyDeadzone(joy.getRawAxis(0), 0.05, 1);
+		return this.applyDeadzone(joy.getRawAxis(0), 0.05);
 	}
 
 	public double getY() {
-		return this.applyDeadzone(-joy.getRawAxis(1), 0.05, 1);
+		return this.applyDeadzone(-joy.getRawAxis(1), 0.05);
 	}
 
 	public double getTwist() {
-		return this.applyDeadzone(joy.getRawAxis(2), 0.01, 1) / 2;
+		return this.applyDeadzone(joy.getRawAxis(2), 0.01) / 2;
 	}
 
 	public double getSlider() {
@@ -39,7 +39,7 @@ public class UserInput {
 	}
 
 	public double getAnalogStick(boolean rightStick, boolean yAxis) {
-		return this.applyDeadzone(xbox.getRawAxis((rightStick ? 1 : 0) * 2 + (yAxis ? 1 : 0)), 0.25, 1);
+		return this.applyDeadzone(xbox.getRawAxis((rightStick ? 1 : 0) * 2 + (yAxis ? 1 : 0)), 0.25);
 	}
 
 	public boolean startPressed() {
@@ -50,10 +50,9 @@ public class UserInput {
 		return this.joy.getPOV(0);
 	}
 
-	private double applyDeadzone(double val, double deadzone, double maxval) {
+	private double applyDeadzone(double val, double deadzone) {
 		if (Math.abs(val) <= deadzone) return 0;
 		double sign = val / Math.abs(val);
-		val = sign * maxval * (Math.abs(val) - deadzone) / (maxval - deadzone);
-		return val;
+		return sign * (Math.abs(val) - deadzone) / (1 - deadzone);
 	}
 }
