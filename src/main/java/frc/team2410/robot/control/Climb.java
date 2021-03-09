@@ -50,8 +50,7 @@ public class Climb implements LogicController {
 		if (robot.userInput.getJoyPOV() != 0 && robot.userInput.getJoyPOV() != 180 && !robot.semiAuto.lift) {
 			double speed = -(targetHeight - getPosition());
 			if (speed > 0) speed /= 15;
-			if (speed < -1) speed = -1;
-			if (speed > 1) speed = 1;
+			speed = Math.max(-1, Math.min(1, speed));
 			winchMotor.set(speed);
 		} else if (!robot.semiAuto.lift) {
 			if (!(getPosition() < 0) || robot.userInput.getJoyPOV() != 0)
