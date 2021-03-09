@@ -32,36 +32,6 @@ public class LED {
 		controller.setChannelModule(4, c);
 	}
 
-	public void fade(int speed) {
-		switch (state) {
-			case 0:
-				b += speed;
-				if (b >= 255) state++;
-				break;
-			case 1:
-				r -= speed;
-				if (r <= 0) state++;
-				break;
-			case 2:
-				g += speed;
-				if (g >= 255) state++;
-				break;
-			case 3:
-				b -= speed;
-				if (b <= 0) state++;
-				break;
-			case 4:
-				r += speed;
-				if (r >= 255) state++;
-				break;
-			case 5:
-				g -= speed;
-				if (g <= 0) state = 0;
-				break;
-		}
-		setColor(r, g, b);
-	}
-
 	public void blink(int r0, int g0, int b0, int r1, int g1, int b1, int speed) {
 		state += speed;
 		if (state > 255 / 2) {
