@@ -2,11 +2,13 @@ package frc.team2410.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team2410.robot.config.RobotConfig;
 import frc.team2410.robot.control.Climb;
 import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
 import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.mechanics.*;
+import frc.team2410.robot.robots.DefaultRobot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public class Robot extends TimedRobot {
 
 	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
 	public GameState currentState;
+	public RobotConfig config = new DefaultRobot();
 
 	public Robot() {
 	}

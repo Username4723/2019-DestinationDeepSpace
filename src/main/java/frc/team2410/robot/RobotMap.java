@@ -14,15 +14,7 @@ public class RobotMap {
 	public static final double WRIST_D = 3;
 
 	//CAN
-	public static final int BACK_LEFT_STEER = 1;
-	public static final int BACK_LEFT_DRIVE = 2;
-	public static final int BACK_RIGHT_STEER = 3;
-	public static final int BACK_RIGHT_DRIVE = 4;
 	public static final int PIGEON_IMU_SRX = 10;
-	public static final int FRONT_RIGHT_STEER = 5;
-	public static final int FRONT_RIGHT_DRIVE = 6;
-	public static final int FRONT_LEFT_STEER = 7;
-	public static final int FRONT_LEFT_DRIVE = 8;
 	public static final int ELEVATOR_A = 9;
 	public static final int ELEVATOR_B = 15;
 	public static final int INTAKE_MOTOR = 11;
@@ -31,10 +23,6 @@ public class RobotMap {
 	public static final int CLIMB_ELEVATOR = 14;
 
 	//Analog In
-	public static final int BL_STEER_ENCODER = 0;
-	public static final int BR_STEER_ENCODER = 1;
-	public static final int FL_STEER_ENCODER = 2;
-	public static final int FR_STEER_ENCODER = 3;
 	public static final int WRIST_ENCODER = 4;
 
 	//DIO
@@ -52,15 +40,7 @@ public class RobotMap {
 	public static final int HATCH_INTAKE_REVERSE = 0;
 
 	//Offsets
-	public static final float BR_OFFSET_COMP = 2.4316403760000003f;
-	public static final float BL_OFFSET_COMP = 1.8701169960000001f;
-	public static final float FR_OFFSET_COMP = 0.797119059f;
-	public static final float FL_OFFSET_COMP = 1.666259595f;
 	public static final float WRIST_OFFSET_COMP = 4.06494099f;
-	public static final float BR_OFFSET = BR_OFFSET_COMP;
-	public static final float BL_OFFSET = BL_OFFSET_COMP;
-	public static final float FR_OFFSET = FR_OFFSET_COMP;
-	public static final float FL_OFFSET = FL_OFFSET_COMP;
 	public static final float WRIST_OFFSET = WRIST_OFFSET_COMP;
 
 	//Elevator Heights

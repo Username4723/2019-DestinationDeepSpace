@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import frc.team2410.robot.GameState;
 import frc.team2410.robot.NumericalPIDOutput;
 import frc.team2410.robot.Robot;
+import frc.team2410.robot.config.WheelPosition;
 
 import static frc.team2410.robot.RobotMap.*;
 
@@ -21,10 +22,10 @@ public class Drivetrain {
 	public Drivetrain(Robot robot) {
 		this.robot = robot;
 
-		this.fl = new SwerveModule(FRONT_LEFT_STEER, FRONT_LEFT_DRIVE, FL_STEER_ENCODER, FL_OFFSET, true);
-		this.fr = new SwerveModule(FRONT_RIGHT_STEER, FRONT_RIGHT_DRIVE, FR_STEER_ENCODER, FR_OFFSET, false);
-		this.bl = new SwerveModule(BACK_LEFT_STEER, BACK_LEFT_DRIVE, BL_STEER_ENCODER, BL_OFFSET, true);
-		this.br = new SwerveModule(BACK_RIGHT_STEER, BACK_RIGHT_DRIVE, BR_STEER_ENCODER, BR_OFFSET, false);
+		this.fl = new SwerveModule(robot.config.WHEELS.get(WheelPosition.FRONT_LEFT));
+		this.fr = new SwerveModule(robot.config.WHEELS.get(WheelPosition.FRONT_RIGHT));
+		this.bl = new SwerveModule(robot.config.WHEELS.get(WheelPosition.BACK_LEFT));
+		this.br = new SwerveModule(robot.config.WHEELS.get(WheelPosition.BACK_RIGHT));
 		this.desiredHeading = robot.gyro.getHeading();
 		//this.driveEnc = new Encoder(DRIVE_CIMCODER_A, DRIVE_CIMCODER_B);
 		//this.driveEnc.setDistancePerPulse(DRIVE_DIST_PER_PULSE);\

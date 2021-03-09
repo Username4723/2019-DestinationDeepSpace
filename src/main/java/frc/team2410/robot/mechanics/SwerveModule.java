@@ -3,6 +3,7 @@ package frc.team2410.robot.mechanics;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
+import frc.team2410.robot.config.WheelConfig;
 
 import static frc.team2410.robot.RobotMap.*;
 
@@ -13,6 +14,10 @@ public class SwerveModule {
 	public AnalogInput positionEncoder;
 	private float currentSpeed;
 	private boolean zeroing;
+
+	SwerveModule(WheelConfig config) {
+		this(config.STEER, config.DRIVE, config.STEER_ENCODER, config.OFFSET, config.INVERTED);
+	}
 
 	SwerveModule(int steerMotor, int driveMotor, int encoder, float offset, boolean isInverted) {
 		//this->steer->ConfigNeutralMode(TalonSRX::NeutralMode::kNeutralMode_Brake);
