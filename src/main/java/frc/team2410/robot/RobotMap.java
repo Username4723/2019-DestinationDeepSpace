@@ -26,14 +26,10 @@ public class RobotMap {
 	public static final int WRIST_ENCODER = 4;
 
 	//DIO
-	public static final int ELEVATOR_ENCODER_A_COMP = 8;
-	public static final int ELEVATOR_ENCODER_B_COMP = 9;
-	public static final int CLIMB_ELEVATOR_A_COMP = 0;
-	public static final int CLIMB_ELEVATOR_B_COMP = 1;
-	public static final int ELEVATOR_ENCODER_A = ELEVATOR_ENCODER_A_COMP;
-	public static final int ELEVATOR_ENCODER_B = ELEVATOR_ENCODER_B_COMP;
-	public static final int CLIMB_ELEVATOR_A = CLIMB_ELEVATOR_A_COMP;
-	public static final int CLIMB_ELEVATOR_B = CLIMB_ELEVATOR_B_COMP;
+	public static final int ELEVATOR_ENCODER_A = 8;
+	public static final int ELEVATOR_ENCODER_B = 9;
+	public static final int CLIMB_ELEVATOR_A = 0;
+	public static final int CLIMB_ELEVATOR_B = 1;
 
 	//PCM
 	public static final int HATCH_INTAKE_FORWARD = 1;
