@@ -3,10 +3,12 @@ package frc.team2410.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team2410.robot.control.Autonomous;
+import frc.team2410.robot.control.auto.AutoController;
+import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.control.Climb;
 import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
+import frc.team2410.robot.control.auto.AutoState;
 import frc.team2410.robot.mechanics.*;
 
 import static frc.team2410.robot.RobotMap.*;
@@ -21,9 +23,8 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Climb climb;
 	public static LED led;
-	public static Autonomous autonomous;
+	public static AutoController autonomous;
 	static boolean fieldOriented = true;
-	SendableChooser<AutoStations> autoPicker;
 	private float smp;
 	private float smi;
 	private float smd;
@@ -48,14 +49,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		climb = new Climb();
 		led = new LED();
-		autonomous = new Autonomous();
-		autoPicker = new SendableChooser<>();
-		autoPicker.addOption("Teleop", AutoStations.TELEOP);
-		autoPicker.addOption("Left Cargoship Auto", AutoStations.CARGOSHIP_LEFT);
-		autoPicker.addOption("Right Cargoship Auto", AutoStations.CARGOSHIP_RIGHT);
-		autoPicker.addOption("Rocket Left Auto", AutoStations.ROCKET_LEFT_FRONT);
-		autoPicker.addOption("Rocket Right Auto", AutoStations.ROCKET_RIGHT_FRONT);
-		SmartDashboard.putData("Auto Picker", autoPicker);
+		autonomous = new AutoController();
 		led.setColor(0, 0, 255);
 
 		//Put PID changers so we don't have to push code every tune
@@ -129,7 +123,7 @@ public class Robot extends TimedRobot {
 		startMatch = true;
 		semiAuto.t.reset();
 		semiAuto.t.start();
-		autonomous.init(autoPicker.getSelected().ordinal());
+		autonomous.init(AutoState.CARGOSHIP_LEFT);
 	}
 
 	@Override
@@ -182,13 +176,5 @@ public class Robot extends TimedRobot {
 		gd = SmartDashboard.getNumber("gyro d", 0.0);
 		drivetrain.setGyroPID(gp, gi, gd);
 		drivetrain.setPID(smp, smi, smd);*/
-	}
-
-	enum AutoStations {
-		TELEOP,
-		CARGOSHIP_LEFT,
-		CARGOSHIP_RIGHT,
-		ROCKET_LEFT_FRONT,
-		ROCKET_RIGHT_FRONT
 	}
 }

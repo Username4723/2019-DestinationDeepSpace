@@ -1,4 +1,4 @@
-package frc.team2410.robot.control;
+package frc.team2410.robot.control.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -6,16 +6,16 @@ import frc.team2410.robot.Robot;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class Autonomous {
+public class AutoController {
     public Timer timer;
-    private int autoNumber;
+    private AutoState autoState;
     private int state = 0;
     private boolean autoDone;
 
-    public void init(int autoNumber) {
+    public void init(AutoState autoState) {
         autoDone = false;
         state = 0;
-        this.autoNumber = autoNumber;
+        this.autoState = autoState;
         timer = new Timer();
     }
 
@@ -28,26 +28,23 @@ public class Autonomous {
     }
 
     public void loop() {
-        SmartDashboard.putNumber("Auto State", state);
-        SmartDashboard.putNumber("Auto Number", autoNumber);
-        switch (autoNumber) {
-            case 0:
+        SmartDashboard.putNumber("Auto Internal Substate", state);
+        SmartDashboard.putString("Auto State", autoState.name());
+        switch (autoState) {
+            case DISABLED:
                 autoDone = true;
                 break;
-            case 1:
+            case CARGOSHIP_LEFT:
                 cargoship(true);
                 break;
-            case 2:
+            case CARGOSHIP_RIGHT:
                 cargoship(false);
                 break;
-            case 3:
+            case ROCKET_LEFT_FRONT:
                 rocketFront(true);
                 break;
-            case 4:
+            case ROCKET_RIGHT_FRONT:
                 rocketFront(false);
-            default:
-                autoDone = true;
-                break;
         }
 
         if (Robot.oi.getAbortAuto()) autoDone = true;
