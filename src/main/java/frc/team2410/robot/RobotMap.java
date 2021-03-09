@@ -44,20 +44,14 @@ public class RobotMap
 	//DIO
 	public static final int ELEVATOR_ENCODER_A_COMP = 8;
 	public static final int ELEVATOR_ENCODER_B_COMP = 9;
-	//public static final int DRIVE_CIMCODER_A_COMP = 0;
-	//public static final int DRIVE_CIMCODER_B_COMP = 1;
 	public static final int CLIMB_ELEVATOR_A_COMP = 0;
 	public static final int CLIMB_ELEVATOR_B_COMP = 1;
 	public static final int ELEVATOR_ENCODER_A_PRAC = 0;
 	public static final int ELEVATOR_ENCODER_B_PRAC = 1;
-	//public static final int DRIVE_CIMCODER_A_PRAC = 2;
-	//public static final int DRIVE_CIMCODER_B_PRAC = 3;
 	public static final int CLIMB_ELEVATOR_A_PRAC = 6;
 	public static final int CLIMB_ELEVATOR_B_PRAC = 9;
 	public static final int ELEVATOR_ENCODER_A = COMPETITION_BOT ? ELEVATOR_ENCODER_A_COMP : ELEVATOR_ENCODER_A_PRAC;
 	public static final int ELEVATOR_ENCODER_B = COMPETITION_BOT ? ELEVATOR_ENCODER_B_COMP : ELEVATOR_ENCODER_B_PRAC;
-	//public static final int DRIVE_CIMCODER_A = COMPETITION_BOT ? DRIVE_CIMCODER_A_COMP : DRIVE_CIMCODER_A_PRAC;
-	//public static final int DRIVE_CIMCODER_B = COMPETITION_BOT ? DRIVE_CIMCODER_B_COMP : DRIVE_CIMCODER_B_PRAC;
 	public static final int CLIMB_ELEVATOR_A = COMPETITION_BOT ? CLIMB_ELEVATOR_A_COMP : CLIMB_ELEVATOR_A_PRAC;
 	public static final int CLIMB_ELEVATOR_B = COMPETITION_BOT ? CLIMB_ELEVATOR_B_COMP : CLIMB_ELEVATOR_B_PRAC;
 
@@ -88,7 +82,6 @@ public class RobotMap
 	public static final double CARGO_LOADING_STATION_HEIGHT = 30;
 	public static final double[] PLACE_HEIGHT = {9, 36, 60};
 	public static final double[] CLIMB_HEIGHT = {9, 22};
-	public static final int CLIMB_OFFSET = 4;
 	public static final double CLIMB_ELEVATOR_MAX_OFFSET = 3.5;
 
 	//Wrist Angles
@@ -100,42 +93,19 @@ public class RobotMap
 	public static final double[] CLIMB_WRIST_ANGLE = {0, -20};
 	public static final double WRIST_UP = 85;
 	public static final double TRAVEL_ANGLE = 50;
-	public static final double WRIST_MAX_SPEED = 0.65;
 
 	//Field Angles
-	public static final double CARGO_SHIP_FRONT = 0;
 	public static final double ROCKET_RIGHT_FRONT = -90;
 	public static final double ROCKET_RIGHT_RIGHT = -90.0 + 61.25;
 	public static final double ROCKET_RIGHT_LEFT = -90 - 61.25;
 	public static final double ROCKET_LEFT_FRONT = 90;
 	public static final double ROCKET_LEFT_RIGHT = 90.0 + 61.25;
 	public static final double ROCKET_LEFT_LEFT = 90 - 61.25;
-	public static final double INTAKE = 180;
-	public static final double INTAKE2 = -180;
 	public static final double [] ROCKET_SIDE_ANGLES = {ROCKET_RIGHT_FRONT, ROCKET_LEFT_FRONT};
 	public static final double [] ROCKET_HATCH_ANGLES = {ROCKET_LEFT_LEFT, ROCKET_LEFT_RIGHT, ROCKET_RIGHT_LEFT, ROCKET_RIGHT_RIGHT};
 
-	//Field Distances
-	public static final double CARGO_DISTANCE = 1;
-	public static final double HATCH_DISTANCE = 4;
-
 	//Encoder Conversions
 	//Diameter * PI / gear ratio / full encoder cycles (edges/4)
-	public static final double DRIVE_DIST_PER_PULSE = 3.0*Math.PI/100.0;
 	public static final double WINCH_DIST_PER_PULSE = 1.91 * Math.PI * 2 / 65 / 3; //two stages
 	public static final double WINCH_CLIMB_DIST_PER_PULSE = 2.00 * Math.PI / 216.66 / 3;
-
-	//Vision
-	public static final int CAMERA_WIDTH = 320;
-	public static final int CAMERA_HEIGHT = 240;
-	public static final double MULTIPLIER_WIDTH = 1d / 12;
-	public static final double MULTIPLIER_HEIGHT = 3d / 50;
-	public static final double MIN_XSPEED = 0.10;
-	public static final double MIN_YSPEED = 0.10;
-	public static final double EXTRA_XSPEED = 0.06;
-	public static final double EXTRA_YSPEED = 0.06;
-	public static final double SONAR_VOLTS_PER_INCH = 0.012446;
-
-	//public static final int PI = 3.1416;
-	//public static final double PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679; //memz
 }

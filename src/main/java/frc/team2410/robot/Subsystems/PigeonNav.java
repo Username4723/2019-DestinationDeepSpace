@@ -30,11 +30,6 @@ public class PigeonNav implements PIDSource
 		double angle = (((this.gyro.getFusedHeading()-offset)%360.0)+360)%360; // Wraps angle between -360:360, changes negative values to equivalent postive values (ex. -90 -> 270 degrees) (changing the range to 0:360)
 		return angle <= 180 ? angle : angle - 360;  // Changes >180 Degrees to Neg Equivalent (ex. 270 -> -90) (changing the range to -180:180) and returns it 
 	}
-	
-	public double getAngularRate() {
-		this.gyro.getRawGyro(this.ypr);
-		return ypr[0];
-	}
 
 	public void resetHeading(int head) {
 		this.gyro.setFusedHeading(0, 20);

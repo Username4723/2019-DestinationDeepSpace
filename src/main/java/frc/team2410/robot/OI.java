@@ -6,7 +6,6 @@ import static frc.team2410.robot.RobotMap.*;
 
 public class OI {
 	private boolean[][] canPress = new boolean[2][12];
-	private boolean canPressPOV = true;
 	private GenericHID[] controllers = new GenericHID[2];
 	private Joystick joy;
 	private XboxController xbox;
@@ -64,11 +63,11 @@ public class OI {
 		if(leadingEdge(false, 9)) {
 			Robot.climb.reset(0);
 		}
-		
+
 		if(leadingEdge(false, 10)) {
 			//Robot.elevator.reset(0);
 		}
-		
+
 		if(joy.getRawButton(3)) {
 			Robot.semiAuto.climb(0);
 		} else if(joy.getRawButton(4)) {

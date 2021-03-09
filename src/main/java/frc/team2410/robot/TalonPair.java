@@ -10,7 +10,7 @@ public class TalonPair {
 		a = new WPI_TalonSRX(aAddr);
 		b = new WPI_TalonSRX(bAddr);
 		a.setInverted(inv);
-		b.setInverted(sameDir ? inv : !inv);
+		b.setInverted(sameDir == inv);
 	}
 	
 	public void set(double speed) {

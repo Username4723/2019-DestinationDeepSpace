@@ -17,19 +17,11 @@ public class Vision
 	private Number[] centerX;
 	private Number[] centerY;
 	private Number[] area;
-	//private DigitalOutput light;
-	private AnalogInput rangeFinder;
 	
 	public Vision() {
 		table = NetworkTableInstance.getDefault().getTable("GRIP/AllDemContours");
 		this.update();
-		//light = new DigitalOutput(CAMERA_LIGHT);
-		//rangeFinder = new AnalogInput(RANGE_FINDER);
 	}
-	
-	/*public double getDistanceAway() {
-		return this.rangeFinder.getVoltage()/SONAR_VOLTS_PER_INCH;
-	}*/
 	
 	private void update() {
 		centerX = table.getEntry("centerX").getNumberArray(new Number[0]);
@@ -51,7 +43,4 @@ public class Vision
 		}
 		return new double[] {x, y};
 	}
-	/*public void setLight(boolean on) {
-		light.set(on);
-	}*/
 }

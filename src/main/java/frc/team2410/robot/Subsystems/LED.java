@@ -15,7 +15,6 @@ public class LED {
 	public double r;
 	public double g;
 	public double b;
-	private long ps = -1;
 	
 	public void setColor(double r, double g, double b) {
 		this.r = r;
@@ -63,22 +62,7 @@ public class LED {
 		}
 		setColor(r, g, b);
 	}
-	
-	public void breathe(int r0, int g0, int b0, int r1, int g1, int b1, int speed) {
-		double ri = (r1-r0)/(255.0/speed);
-		double gi = (g1-g0)/(255.0/speed);
-		double bi = (b1-b0)/(255.0/speed);
-		if(((r >= (r0 > r1 ? r0 : r1) && ri >= 0) || (r <= (r0 < r1 ? r0 : r1) && ri <= 0)) && ((g >= (g0 > g1 ? g0 : g1) && gi >= 0) || (g <= (g0 < g1 ? g0 : g1) && gi <= 0)) && ((b >= (b0 > b1 ? b0 : b1) && bi >= 0) || (b <= (b0 < b1 ? b0 : b1) && bi <= 0))) {
-			state = 0;
-		}
-		if(((r >= (r0 > r1 ? r0 : r1) && ri <= 0) || (r <= (r0 < r1 ? r0 : r1) && ri >= 0)) && ((g >= (g0 > g1 ? g0 : g1) && gi <= 0) || (g <= (g0 < g1 ? g0 : g1) && gi >= 0)) && ((b >= (b0 > b1 ? b0 : b1) && bi <= 0) || (b <= (b0 < b1 ? b0 : b1) && bi >= 0))) {
-			state = 1;
-		}
-		r += ri*((state*2)-1);
-		g += gi*((state*2)-1);
-		b += bi*((state*2)-1);
-		setColor(r, g, b);
-	}
+
 	public void blink(int r0, int g0, int b0, int r1, int g1, int b1, int speed) {
 		state += speed;
 		if(state > 255/2) {
@@ -91,12 +75,7 @@ public class LED {
 		}
 	}
 	
-	public void status(int r0, int g0, int b0, int r1, int g1, int b1, int speed, boolean status) {
-		/*long s = r0 + 256*(g0 + 256*(b0 + 256*(status? 1 : 0)));
-		if(s != ps) {
-			setColor(r0, g0, b0);
-		}
-		ps = s;*/
+	public void status(int r0, int g0, int b0, int speed, boolean status) {
 		if(status) {
 			setColor(r0, g0, b0);
 		} else {

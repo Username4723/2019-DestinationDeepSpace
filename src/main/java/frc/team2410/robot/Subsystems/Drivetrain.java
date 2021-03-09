@@ -12,7 +12,6 @@ public class Drivetrain {
 	public SwerveModule bl;
 	public SwerveModule br;
 	private PIDController gyroPID;
-	private Encoder driveEnc;
 	private double pHead = 0; // Previous heading
 	
 	public Drivetrain() {
@@ -53,21 +52,6 @@ public class Drivetrain {
 		this.fr.drive(0, 0);
 		this.bl.drive(0, 0);
 		this.br.drive(0, 0);
-	}
-	
-	void drive(double angle, double speed, double speedMultiplier) {
-		this.fl.drive(speed*speedMultiplier, angle);
-		this.fr.drive(speed*speedMultiplier, angle);
-		this.bl.drive(speed*speedMultiplier, angle);
-		this.br.drive(speed*speedMultiplier, angle);
-	}
-	
-	void arcadeDrive(double forward, double rotation, double speedMultiplier) {
-		double correction = 0.025*(Robot.gyro.getHeading()-desiredHeading);
-		this.fl.drive((forward+rotation*1/Math.sqrt(2)+correction)*speedMultiplier, 0);
-		this.fr.drive((forward-rotation*1/Math.sqrt(2)-correction)*speedMultiplier, 0);
-		this.bl.drive((forward+rotation*1/Math.sqrt(2)+correction)*speedMultiplier, 0);
-		this.br.drive((forward-rotation*1/Math.sqrt(2)-correction)*speedMultiplier, 0);
 	}
 	
 	public void crabDrive(double x, double y, double rotation, double speedMultiplier, boolean useGyro) {
@@ -154,15 +138,5 @@ public class Drivetrain {
 	public double getTravel() {
 		//return Math.abs(driveEnc.getDistance())
 		return 0;
-	}
-	
-	public void setGyroPID(double p, double i, double d) {
-		gyroPID.setPID(p, i, d);
-	}
-	public void setPID(float p, float i, float d) {
-		fl.setPID(p, i, d);
-		fr.setPID(p, i, d);
-		bl.setPID(p, i, d);
-		br.setPID(p, i, d);
 	}
 }

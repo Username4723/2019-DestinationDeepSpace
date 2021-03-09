@@ -34,10 +34,6 @@ public class SwerveModule
 		zeroing = false;
 	}
 
-	void setPID(float p, float i, float d) {
-		this.pid.setPID(p, i, d);
-	}
-
 	void drive(double speed, double setpoint) {
 		speed = Math.abs(speed) > 0.1 ? speed : 0; // Buffer for speed
 		setpoint /= 72;

@@ -1,7 +1,6 @@
 package frc.team2410.robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team2410.robot.Subsystems.*;
@@ -166,15 +165,15 @@ public class Robot extends TimedRobot
 		climb.loop();
 		
 		if(elevator.winchMotor.badCurrent()) {
-			led.status(255, 255, 0, 255, 255, 11, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
+			led.status(255, 255, 0, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
 		} else if(semiAuto.placeState == -1) {
-			led.status(255, 0, 255, 255, 15, 255, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
+			led.status(255, 0, 255, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
 		} else if(semiAuto.engaged) {
-			led.status(255, 0, 0, 255, 7, 7, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
+			led.status(255, 0, 0, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
 		} else if(vision.getCentralValue()[0] != 0) {
-			led.status(0, 255, 0, 15, 255, 15, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
+			led.status(0, 255, 0, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
 		} else {
-			led.status(0, 0, 255, 31, 31, 255, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
+			led.status(0, 0, 255, 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()), fieldOriented);
 		}
 		
 		SmartDashboard.putNumber("LED Speed", 10+(int)(10*Math.sqrt(oi.getX()*oi.getX()+oi.getY()*oi.getY())*oi.getSlider()));
