@@ -61,7 +61,7 @@ public class Climb implements LogicController {
 		}
 	}
 
-	public double getVoltage() {
+	public double getCurrent() {
 		return winchMotor.getOutputCurrent();
 	}
 }

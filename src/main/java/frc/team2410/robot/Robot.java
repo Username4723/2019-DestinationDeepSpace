@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("ElevatorA Current", elevator.winchMotor.getAcurrent());
 		SmartDashboard.putNumber("ElevatorB Current", elevator.winchMotor.getBcurrent());
 		SmartDashboard.putNumber("Wrist Current", intake.getWristCurrent());
-		SmartDashboard.putNumber("Climb Current", climb.getVoltage());
+		SmartDashboard.putNumber("Climb Current", climb.getCurrent());
 		SmartDashboard.putNumber("Wrist Voltage", intake.getVoltage());
 		SmartDashboard.putNumber("CenterX", vision.getCentralValue()[0]);
 		SmartDashboard.putNumber("CenterY", vision.getCentralValue()[1]);
@@ -87,10 +87,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Wrist Angle", intake.getAngle());
 		SmartDashboard.putNumber("Wrist Target", intake.getWristTarget());
 
-		SmartDashboard.putNumber("Elevator height", elevator.getPosition());
-		SmartDashboard.putNumber("Elevator target", elevator.getTarget());
-		SmartDashboard.putNumber("Climb height", climb.getPosition());
-		SmartDashboard.putNumber("Climb target", climb.getTarget());
+		SmartDashboard.putNumber("Elevator Height", elevator.getPosition());
+		SmartDashboard.putNumber("Elevator Target", elevator.getTarget());
+		SmartDashboard.putNumber("Climb Height", climb.getPosition());
+		SmartDashboard.putNumber("Climb Target", climb.getTarget());
 		SmartDashboard.putNumber("Place State", semiAuto.placeState);
 		SmartDashboard.putNumber("R", led.r);
 		SmartDashboard.putNumber("G", led.g);
