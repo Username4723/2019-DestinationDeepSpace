@@ -1,11 +1,15 @@
 package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.wpilibj.Timer;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.Robot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class SemiAuto {
+public class SemiAuto implements DashboardComponent {
 	private Robot robot;
 
 	public int placeState = 0;
@@ -19,6 +23,20 @@ public class SemiAuto {
 	public double targetAngle;
 	private int climbState = 0;
 
+	@Override
+	public String getDashboardName() {
+		return "Semi-Auto";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Place State", placeState);
+		map.put("Semi-Auto Done", placeState == -1);
+		map.put("Semiauto Engaged", engaged);
+
+		return map;
+	}
 
 	public SemiAuto(Robot robot) {
 		this.robot = robot;

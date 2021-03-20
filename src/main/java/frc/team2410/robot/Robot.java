@@ -60,6 +60,9 @@ public class Robot extends TimedRobot {
 
 		registerDashboardComponent(led);
 		registerDashboardComponent(drivetrain);
+		registerDashboardComponent(semiAuto);
+		registerDashboardComponent(vision);
+		registerDashboardComponent(gyro);
 	}
 
 	private void registerLogicController(GameState state, LogicController controller) {
@@ -86,29 +89,6 @@ public class Robot extends TimedRobot {
 		for (DashboardComponent component : dashboardComponents) {
 			publishData(component.getDashboardName(), component.getReportedData());
 		}
-
-		SmartDashboard.putNumber("ElevatorA Current", elevator.winchMotor.getACurrent());
-		SmartDashboard.putNumber("ElevatorB Current", elevator.winchMotor.getBCurrent());
-		SmartDashboard.putNumber("Wrist Current", intake.getWristCurrent());
-		SmartDashboard.putNumber("Climb Current", climb.getCurrent());
-		SmartDashboard.putNumber("Wrist Voltage", intake.getVoltage());
-		SmartDashboard.putNumber("CenterX", vision.getCentralValue()[0]);
-		SmartDashboard.putNumber("CenterY", vision.getCentralValue()[1]);
-		SmartDashboard.putNumber("Heading", gyro.getHeading());
-		SmartDashboard.putString("Gyro Status", gyro.getStatus().toString());
-		SmartDashboard.putNumber("Wrist Angle", intake.getAngle());
-		SmartDashboard.putNumber("Wrist Target", intake.getWristTarget());
-
-		SmartDashboard.putNumber("Elevator Height", elevator.getPosition());
-		SmartDashboard.putNumber("Elevator Target", elevator.getTarget());
-		SmartDashboard.putNumber("Climb Height", climb.getPosition());
-		SmartDashboard.putNumber("Climb Target", climb.getTarget());
-		SmartDashboard.putNumber("Place State", semiAuto.placeState);
-		SmartDashboard.putBoolean("Toasty Elevator", !elevator.winchMotor.badCurrent());
-		SmartDashboard.putBoolean("Hatch Intake Status", intake.getHatchStatus());
-		SmartDashboard.putBoolean("Semi-Auto Done", semiAuto.placeState == -1);
-		SmartDashboard.putBoolean("Line", vision.getCentralValue()[0] != 0);
-		SmartDashboard.putBoolean("Semiauto Engaged", semiAuto.engaged);
 	}
 
 	@Override

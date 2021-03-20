@@ -2,12 +2,30 @@ package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.team2410.robot.DashboardComponent;
 
-public class Vision {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Vision implements DashboardComponent {
 	private final NetworkTable table;
 	private Number[] centerX;
 	private Number[] centerY;
 	private Number[] area;
+
+	@Override
+	public String getDashboardName() {
+		return "Vision";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("CenterX", getCentralValue()[0]);
+		map.put("CenterY", getCentralValue()[1]);
+		map.put("Line", getCentralValue()[0] != 0);
+		return map;
+	}
 
 	public Vision() {
 		table = NetworkTableInstance.getDefault().getTable("GRIP/AllDemContours");

@@ -4,16 +4,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.input.StickAxis;
 import frc.team2410.robot.input.StickPosition;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 import static frc.team2410.robot.RobotMap.*;
 
-public class Intake implements LogicController {
+public class Intake implements LogicController, DashboardComponent {
 	private Robot robot;
 
 	private final DoubleSolenoid solenoid;
@@ -22,6 +26,22 @@ public class Intake implements LogicController {
 	private final PIDController pid;
 	WPI_TalonSRX wheels;
 	private boolean open = true;
+
+	@Override
+	public String getDashboardName() {
+		return "Intake";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Wrist Voltage", getVoltage());
+		map.put("Wrist Current", getWristCurrent());
+		map.put("Wrist Angle", getAngle());
+		map.put("Wrist Target", getWristTarget());
+		map.put("Hatch Status", getHatchStatus());
+		return map;
+	}
 
 	public Intake(Robot robot) {
 		this.robot = robot;

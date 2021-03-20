@@ -1,18 +1,34 @@
 package frc.team2410.robot.control.auto;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static frc.team2410.robot.RobotMap.*;
 
-public class AutoController implements LogicController {
+public class AutoController implements LogicController, DashboardComponent {
     private Robot robot;
 
     public Timer timer;
     private AutoState autoState = AutoState.CARGOSHIP_LEFT;
     private int state = 0;
+
+    @Override
+    public String getDashboardName() {
+        return "Auto Controller";
+    }
+
+    @Override
+    public Map<String, Object> getReportedData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("Auto Internal Substate", state);
+        map.put("Auto State", autoState);
+        return map;
+    }
 
     public AutoController(Robot robot) {
         this.robot = robot;
@@ -23,9 +39,8 @@ public class AutoController implements LogicController {
         timer = new Timer();
     }
 
+    @Override
     public void loop() {
-        SmartDashboard.putNumber("Auto Internal Substate", state);
-        SmartDashboard.putString("Auto State", autoState.name());
         switch (autoState) {
             case CARGOSHIP_LEFT:
                 cargoship(true);

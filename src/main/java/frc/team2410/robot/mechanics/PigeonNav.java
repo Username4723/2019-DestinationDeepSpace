@@ -3,12 +3,29 @@ package frc.team2410.robot.mechanics;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import frc.team2410.robot.DashboardComponent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static frc.team2410.robot.RobotMap.PIGEON_IMU_SRX;
 
-public class PigeonNav implements PIDSource {
+public class PigeonNav implements PIDSource, DashboardComponent {
 	private final PigeonIMU gyro;
 	private int offset;
+
+	@Override
+	public String getDashboardName() {
+		return "Gyro";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Heading", getHeading());
+		map.put("Gyro Status", getStatus());
+		return map;
+	}
 
 	public PigeonNav() {
 		this.gyro = new PigeonIMU(PIGEON_IMU_SRX);

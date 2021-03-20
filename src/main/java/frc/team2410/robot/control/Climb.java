@@ -2,13 +2,17 @@ package frc.team2410.robot.control;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.input.InputSource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static frc.team2410.robot.RobotMap.*;
 
-public class Climb implements LogicController {
+public class Climb implements LogicController, DashboardComponent {
 	private Robot robot;
 
 	private final WPI_TalonSRX winchMotor;
@@ -16,6 +20,20 @@ public class Climb implements LogicController {
 
 	private double targetHeight;
 	private double offset;
+
+	@Override
+	public String getDashboardName() {
+		return "Climb";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Current", getCurrent());
+		map.put("Position", getPosition());
+		map.put("Target", getTarget());
+		return map;
+	}
 
 	public Climb(Robot robot) {
 		this.robot = robot;

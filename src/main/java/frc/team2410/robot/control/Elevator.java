@@ -1,6 +1,7 @@
 package frc.team2410.robot.control;
 
 import edu.wpi.first.wpilibj.Encoder;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.TalonPair;
@@ -8,9 +9,12 @@ import frc.team2410.robot.input.InputSource;
 import frc.team2410.robot.input.StickAxis;
 import frc.team2410.robot.input.StickPosition;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static frc.team2410.robot.RobotMap.*;
 
-public class Elevator implements LogicController {
+public class Elevator implements LogicController, DashboardComponent {
 	private Robot robot;
 
 	private final Encoder heightEncoder;
@@ -19,6 +23,21 @@ public class Elevator implements LogicController {
 	private double offset;
 	private boolean checkStartReleased = false;
 
+	@Override
+	public String getDashboardName() {
+		return "Elevator";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("A-Current", winchMotor.getACurrent());
+		map.put("B-Current", winchMotor.getBCurrent());
+		map.put("Position", getPosition());
+		map.put("Target", getTarget());
+		map.put("Bad Current", winchMotor.badCurrent());
+		return map;
+	}
 
 	public Elevator(Robot robot) {
 		this.robot = robot;
