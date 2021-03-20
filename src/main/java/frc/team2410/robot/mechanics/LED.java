@@ -1,18 +1,33 @@
 package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import frc.team2410.robot.DashboardComponent;
 import net.bak3dnet.robotics.led.LightDrive12;
 import net.bak3dnet.robotics.led.modules.AStaticColorModule;
 
-public class LED {
-	private final LightDrive12 controller;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LED implements DashboardComponent {
+	private final LightDrive12 controller = new LightDrive12(SerialPort.Port.kMXP);
 	public double r;
 	public double g;
 	public double b;
 	private int state = 0;
 
-	public LED() {
-		controller = new LightDrive12(SerialPort.Port.kMXP);
+	@Override
+	public String getDashboardName() {
+		return "LED";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Red", r);
+		map.put("Green", g);
+		map.put("Blue", b);
+		map.put("State", state);
+		return map;
 	}
 
 	public void setColor(double r, double g, double b) {

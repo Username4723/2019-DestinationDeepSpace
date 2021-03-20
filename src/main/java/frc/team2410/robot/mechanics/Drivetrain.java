@@ -1,14 +1,17 @@
 package frc.team2410.robot.mechanics;
 
 import edu.wpi.first.wpilibj.PIDController;
+import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.GameState;
 import frc.team2410.robot.NumericalPIDOutput;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.config.WheelPosition;
 
+import java.util.Map;
+
 import static frc.team2410.robot.RobotMap.*;
 
-public class Drivetrain {
+public class Drivetrain implements DashboardComponent {
 	private Robot robot;
 
 	private final PIDController gyroPID;
@@ -18,6 +21,16 @@ public class Drivetrain {
 	public SwerveModule bl;
 	public SwerveModule br;
 	private double pHead = 0; // Previous heading
+
+	@Override
+	public String getDashboardName() {
+		return "Drivechain";
+	}
+
+	@Override
+	public Map<String, Object> getReportedData() {
+		return null;
+	}
 
 	public Drivetrain(Robot robot) {
 		this.robot = robot;

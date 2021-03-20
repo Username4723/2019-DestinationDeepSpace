@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
 	private boolean startMatch = true;
 
 	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
+	private List<DashboardComponent> dashboardComponents = new ArrayList<>();
 	public GameState currentState;
 
 	public RobotConfig config;
@@ -56,14 +57,36 @@ public class Robot extends TimedRobot {
 		registerLogicController(GameState.TELEOP, intake);
 		registerLogicController(GameState.TELEOP, elevator);
 		registerLogicController(GameState.TELEOP, climb);
+
+		registerDashboardComponent(led);
+		registerDashboardComponent(drivetrain);
 	}
 
 	private void registerLogicController(GameState state, LogicController controller) {
 		this.gameControllers.computeIfAbsent(state, it -> new ArrayList<>()).add(controller);
+		if (controller instanceof DashboardComponent) dashboardComponents.add((DashboardComponent) controller);
+	}
+
+	private void registerDashboardComponent(DashboardComponent component) {
+		dashboardComponents.add(component);
+	}
+
+	public void publishData(String header, Map<String, Object> data) {
+		for (Map.Entry<String, Object> entry : data.entrySet()) {
+			String key = header + " - " + entry.getKey();
+			Object value = entry.getValue();
+			if (value instanceof String) SmartDashboard.putString(key, (String) value);
+			else if (value instanceof Number) SmartDashboard.putNumber(key, ((Number) value).doubleValue());
+			else if (value instanceof Map) publishData(key + " - ", (Map<String, Object>) value);
+		}
 	}
 
 	@Override
 	public void robotPeriodic() {
+		for (DashboardComponent component : dashboardComponents) {
+			publishData(component.getDashboardName(), component.getReportedData());
+		}
+
 		SmartDashboard.putNumber("FL Angle", drivetrain.fl.getAngle());
 		SmartDashboard.putNumber("FR Angle", drivetrain.fr.getAngle());
 		SmartDashboard.putNumber("BL Angle", drivetrain.bl.getAngle());
@@ -90,9 +113,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Climb Height", climb.getPosition());
 		SmartDashboard.putNumber("Climb Target", climb.getTarget());
 		SmartDashboard.putNumber("Place State", semiAuto.placeState);
-		SmartDashboard.putNumber("R", led.r);
-		SmartDashboard.putNumber("G", led.g);
-		SmartDashboard.putNumber("B", led.b);
 		SmartDashboard.putBoolean("Toasty Elevator", !elevator.winchMotor.badCurrent());
 		SmartDashboard.putBoolean("Hatch Intake Status", intake.getHatchStatus());
 		SmartDashboard.putBoolean("Semi-Auto Done", semiAuto.placeState == -1);
