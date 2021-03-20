@@ -6,6 +6,7 @@ plugins {
 }
 
 def ROBOT_MAIN_CLASS = "frc.team2410.robot.Main"
+def includeDesktopSupport = true
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
