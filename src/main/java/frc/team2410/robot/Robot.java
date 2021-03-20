@@ -87,14 +87,6 @@ public class Robot extends TimedRobot {
 			publishData(component.getDashboardName(), component.getReportedData());
 		}
 
-		SmartDashboard.putNumber("FL Angle", drivetrain.fl.getAngle());
-		SmartDashboard.putNumber("FR Angle", drivetrain.fr.getAngle());
-		SmartDashboard.putNumber("BL Angle", drivetrain.bl.getAngle());
-		SmartDashboard.putNumber("BR Angle", drivetrain.br.getAngle());
-		SmartDashboard.putNumber("FL Voltage", drivetrain.fl.positionEncoder.getVoltage());
-		SmartDashboard.putNumber("FR Voltage", drivetrain.fr.positionEncoder.getVoltage());
-		SmartDashboard.putNumber("BL Voltage", drivetrain.bl.positionEncoder.getVoltage());
-		SmartDashboard.putNumber("BR Voltage", drivetrain.br.positionEncoder.getVoltage());
 		SmartDashboard.putNumber("ElevatorA Current", elevator.winchMotor.getACurrent());
 		SmartDashboard.putNumber("ElevatorB Current", elevator.winchMotor.getBCurrent());
 		SmartDashboard.putNumber("Wrist Current", intake.getWristCurrent());
@@ -104,7 +96,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("CenterY", vision.getCentralValue()[1]);
 		SmartDashboard.putNumber("Heading", gyro.getHeading());
 		SmartDashboard.putString("Gyro Status", gyro.getStatus().toString());
-		SmartDashboard.putNumber("Desired Heading", drivetrain.wrap(drivetrain.desiredHeading, -180.0, 180.0));
 		SmartDashboard.putNumber("Wrist Angle", intake.getAngle());
 		SmartDashboard.putNumber("Wrist Target", intake.getWristTarget());
 

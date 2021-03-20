@@ -7,6 +7,7 @@ import frc.team2410.robot.NumericalPIDOutput;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.config.WheelPosition;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static frc.team2410.robot.RobotMap.*;
@@ -16,10 +17,7 @@ public class Drivetrain implements DashboardComponent {
 
 	private final PIDController gyroPID;
 	public double desiredHeading;
-	public SwerveModule fl;
-	public SwerveModule fr;
-	public SwerveModule bl;
-	public SwerveModule br;
+	public Map<WheelPosition, SwerveModule> swerveModules = new HashMap<>();
 	private double pHead = 0; // Previous heading
 
 	@Override
@@ -29,16 +27,27 @@ public class Drivetrain implements DashboardComponent {
 
 	@Override
 	public Map<String, Object> getReportedData() {
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		for (WheelPosition position : swerveModules.keySet()) {
+			Map<String, Object> moduleInfo = new HashMap<>();
+			SwerveModule module = swerveModules.get(position);
+
+			moduleInfo.put("Angle", module.getAngle());
+			moduleInfo.put("Encoder Voltage", module.positionEncoder.getVoltage());
+
+			map.put(position.name(), moduleInfo);
+		}
+
+		map.put("Desired Heading", wrap(desiredHeading, -180.0, 180.0));
+		return map;
 	}
 
 	public Drivetrain(Robot robot) {
 		this.robot = robot;
 
-		this.fl = new SwerveModule(robot.config.WHEELS.get(WheelPosition.FRONT_LEFT));
-		this.fr = new SwerveModule(robot.config.WHEELS.get(WheelPosition.FRONT_RIGHT));
-		this.bl = new SwerveModule(robot.config.WHEELS.get(WheelPosition.BACK_LEFT));
-		this.br = new SwerveModule(robot.config.WHEELS.get(WheelPosition.BACK_RIGHT));
+		for (WheelPosition wheelPosition : WheelPosition.values()) {
+			swerveModules.put(wheelPosition, new SwerveModule(robot.config.WHEELS.get(wheelPosition)));
+		}
 		this.desiredHeading = robot.gyro.getHeading();
 		//this.driveEnc = new Encoder(DRIVE_CIMCODER_A, DRIVE_CIMCODER_B);
 		//this.driveEnc.setDistancePerPulse(DRIVE_DIST_PER_PULSE);\
@@ -61,17 +70,11 @@ public class Drivetrain implements DashboardComponent {
 	}
 
 	public void returnWheelsToZero() {
-		this.fl.returnToZero();
-		this.fr.returnToZero();
-		this.bl.returnToZero();
-		this.br.returnToZero();
+		swerveModules.values().forEach(SwerveModule::returnToZero);
 	}
 
 	public void brake() {
-		this.fl.drive(0, 0);
-		this.fr.drive(0, 0);
-		this.bl.drive(0, 0);
-		this.br.drive(0, 0);
+		swerveModules.values().forEach(it -> it.drive(0, 0));
 	}
 
 	public void crabDrive(double x, double y, double rotation, double speedMultiplier, boolean useGyro) {
@@ -136,15 +139,12 @@ public class Drivetrain implements DashboardComponent {
 				bra = (180 / Math.PI) * -Math.atan2(back, right);
 				bra = wrap(bra, 360, 0);
 			}
-			this.fl.drive(flds * speedMultiplier, fla);
-			this.fr.drive(frds * speedMultiplier, fra);
-			this.bl.drive(blds * speedMultiplier, bla);
-			this.br.drive(brds * speedMultiplier, bra);
+			this.swerveModules.get(WheelPosition.FRONT_LEFT).drive(flds * speedMultiplier, fla);
+			this.swerveModules.get(WheelPosition.FRONT_RIGHT).drive(frds * speedMultiplier, fra);
+			this.swerveModules.get(WheelPosition.BACK_LEFT).drive(blds * speedMultiplier, bla);
+			this.swerveModules.get(WheelPosition.BACK_RIGHT).drive(brds * speedMultiplier, bra);
 		} else {
-			this.fl.drive(0, this.fl.getAngle());
-			this.fr.drive(0, this.fr.getAngle());
-			this.bl.drive(0, this.bl.getAngle());
-			this.br.drive(0, this.br.getAngle());
+			swerveModules.values().forEach(it -> it.drive(0, it.getAngle()));
 		}
 	}
 
