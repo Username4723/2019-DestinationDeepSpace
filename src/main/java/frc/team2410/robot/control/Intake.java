@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
+import frc.team2410.robot.input.StickAxis;
+import frc.team2410.robot.input.StickPosition;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
@@ -98,7 +100,7 @@ public class Intake implements LogicController {
 	}
 
 	public void loop() {
-		double wristStick = robot.userInput.getAnalogStick(false, true);
+		double wristStick = robot.inputManager.getAnalogStick(StickPosition.LEFT, StickAxis.Y);
 		if (wristStick != 0) {
 			pid.disable();
 			setWrist(-wristStick);

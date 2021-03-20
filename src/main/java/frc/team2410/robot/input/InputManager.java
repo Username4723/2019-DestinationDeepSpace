@@ -13,6 +13,7 @@ public abstract class InputManager {
     public abstract double getY();
     public abstract double getTwist();
     public abstract double getSlider();
+    public abstract double getAnalogStick(StickPosition position, StickAxis axis);
 
 
     public final boolean getLeadingButtonState(InputSource source, int buttonIndex) {

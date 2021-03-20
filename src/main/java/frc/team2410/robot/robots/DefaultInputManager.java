@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.team2410.robot.input.InputManager;
 import frc.team2410.robot.input.InputSource;
+import frc.team2410.robot.input.StickAxis;
+import frc.team2410.robot.input.StickPosition;
 
 public class DefaultInputManager extends InputManager {
     private final Joystick joystick;
@@ -54,8 +56,9 @@ public class DefaultInputManager extends InputManager {
         return (1 - joystick.getRawAxis(3)) / 2;
     }
 
-    public double getAnalogStick(boolean rightStick, boolean yAxis) {
-        return this.applyDeadzone(xbox.getRawAxis((rightStick ? 1 : 0) * 2 + (yAxis ? 1 : 0)), 0.25);
+    @Override
+    public double getAnalogStick(StickPosition position, StickAxis axis) {
+        return this.applyDeadzone(xbox.getRawAxis(position.ordinal() * 2 + axis.ordinal()), 0.25);
     }
 
     private double applyDeadzone(double val, double deadzone) {

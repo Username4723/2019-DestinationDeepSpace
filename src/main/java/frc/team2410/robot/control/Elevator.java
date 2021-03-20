@@ -5,6 +5,8 @@ import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.TalonPair;
 import frc.team2410.robot.input.InputSource;
+import frc.team2410.robot.input.StickAxis;
+import frc.team2410.robot.input.StickPosition;
 
 import static frc.team2410.robot.RobotMap.*;
 
@@ -46,7 +48,7 @@ public class Elevator implements LogicController {
 	}
 
 	public void loop() {
-		double elevatorStick = robot.userInput.getAnalogStick(true, true);
+		double elevatorStick = robot.inputManager.getAnalogStick(StickPosition.RIGHT, StickAxis.Y);
 		if (robot.inputManager.getButtonState(InputSource.XBOX, 10)) {
 			winchMotor.set(0.2);
 			checkStartReleased = true;
