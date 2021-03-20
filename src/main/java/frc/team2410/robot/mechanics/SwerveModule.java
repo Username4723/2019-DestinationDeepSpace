@@ -16,7 +16,7 @@ public class SwerveModule {
 	private boolean zeroing;
 
 	SwerveModule(WheelConfig config) {
-		this(config.STEER, config.DRIVE, config.STEER_ENCODER, config.OFFSET, config.INVERTED);
+		this(config.getSteer(), config.getDrive(), config.getSteerEncoder(), config.getOffset(), config.isInverted());
 	}
 
 	SwerveModule(int steerMotor, int driveMotor, int encoder, float offset, boolean isInverted) {

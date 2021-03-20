@@ -1,17 +1,12 @@
 package frc.team2410.robot.config;
 
-public class WheelConfig {
-    public final int STEER;
-    public final int STEER_ENCODER;
-    public final int DRIVE;
-    public final float OFFSET;
-    public final boolean INVERTED;
+import lombok.Data;
 
-    public WheelConfig(int STEER, int STEER_ENCODER, int DRIVE, float OFFSET, boolean INVERTED) {
-        this.STEER = STEER;
-        this.STEER_ENCODER = STEER_ENCODER;
-        this.DRIVE = DRIVE;
-        this.OFFSET = OFFSET;
-        this.INVERTED = INVERTED;
-    }
+@Data
+public class WheelConfig {
+    private final int steer;
+    private final int steerEncoder;
+    private final int drive;
+    private final float offset;
+    private final boolean inverted;
 }
