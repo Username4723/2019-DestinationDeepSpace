@@ -72,8 +72,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("FR Voltage", drivetrain.fr.positionEncoder.getVoltage());
 		SmartDashboard.putNumber("BL Voltage", drivetrain.bl.positionEncoder.getVoltage());
 		SmartDashboard.putNumber("BR Voltage", drivetrain.br.positionEncoder.getVoltage());
-		SmartDashboard.putNumber("ElevatorA Current", elevator.winchMotor.getAcurrent());
-		SmartDashboard.putNumber("ElevatorB Current", elevator.winchMotor.getBcurrent());
+		SmartDashboard.putNumber("ElevatorA Current", elevator.winchMotor.getACurrent());
+		SmartDashboard.putNumber("ElevatorB Current", elevator.winchMotor.getBCurrent());
 		SmartDashboard.putNumber("Wrist Current", intake.getWristCurrent());
 		SmartDashboard.putNumber("Climb Current", climb.getCurrent());
 		SmartDashboard.putNumber("Wrist Voltage", intake.getVoltage());

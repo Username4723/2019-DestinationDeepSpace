@@ -22,11 +22,11 @@ public class TalonPair {
 		return a.getOutputCurrent() > 30 || b.getOutputCurrent() > 30;
 	}
 
-	public double getAcurrent() {
+	public double getACurrent() {
 		return a.getOutputCurrent();
 	}
 
-	public double getBcurrent() {
+	public double getBCurrent() {
 		return b.getOutputCurrent();
 	}
 }
