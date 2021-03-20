@@ -78,9 +78,9 @@ public class Robot extends TimedRobot {
 		for (Map.Entry<String, Object> entry : data.entrySet()) {
 			String key = header + " - " + entry.getKey();
 			Object value = entry.getValue();
-			if (value instanceof String) SmartDashboard.putString(key, (String) value);
-			else if (value instanceof Number) SmartDashboard.putNumber(key, ((Number) value).doubleValue());
+			if (value instanceof Number) SmartDashboard.putNumber(key, ((Number) value).doubleValue());
 			else if (value instanceof Map) publishData(key + " - ", (Map<String, Object>) value);
+			else SmartDashboard.putString(key, value.toString());
 		}
 	}
 
