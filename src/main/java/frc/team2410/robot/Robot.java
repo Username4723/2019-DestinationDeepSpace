@@ -10,8 +10,6 @@ import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.control.teleop.TeleOpController;
 import frc.team2410.robot.input.InputManager;
 import frc.team2410.robot.mechanics.*;
-import frc.team2410.robot.robots.DefaultInput;
-import frc.team2410.robot.robots.DefaultRobot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +31,11 @@ public class Robot extends TimedRobot {
 
 	private Map<GameState, List<LogicController>> gameControllers = new HashMap<>();
 	public GameState currentState;
-	public RobotConfig config = new DefaultRobot();
 
-	public Robot() {
+	public RobotConfig config;
+
+	public Robot(RobotConfig config) {
+		this.config = config;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
 		//Create subsystems
 		gyro = new PigeonNav();
 		drivetrain = new Drivetrain(this);
-		inputManager = new DefaultInput();
+		inputManager = config.createInputManager();
 		vision = new Vision();
 		semiAuto = new SemiAuto(this);
 		elevator = new Elevator(this);

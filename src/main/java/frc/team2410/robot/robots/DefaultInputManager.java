@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.team2410.robot.input.InputManager;
 import frc.team2410.robot.input.InputSource;
 
-public class DefaultInput extends InputManager {
+public class DefaultInputManager extends InputManager {
     private final Joystick joystick;
     private final XboxController xbox;
 
-    public DefaultInput() {
+    public DefaultInputManager() {
         joystick = new Joystick(0);
         xbox = new XboxController(1);
     }
