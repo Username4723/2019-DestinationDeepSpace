@@ -1,7 +1,9 @@
-package frc.team2410.robot.input;
+package frc.team2410.robot.robots;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.team2410.robot.input.InputManager;
+import frc.team2410.robot.input.InputSource;
 
 public class DefaultInput extends InputManager {
     private final Joystick joystick;

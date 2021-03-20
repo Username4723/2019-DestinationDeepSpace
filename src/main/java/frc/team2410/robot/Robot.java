@@ -8,9 +8,9 @@ import frc.team2410.robot.control.Elevator;
 import frc.team2410.robot.control.Intake;
 import frc.team2410.robot.control.auto.AutoController;
 import frc.team2410.robot.control.teleop.TeleOpController;
-import frc.team2410.robot.input.DefaultInput;
 import frc.team2410.robot.input.InputManager;
 import frc.team2410.robot.mechanics.*;
+import frc.team2410.robot.robots.DefaultInput;
 import frc.team2410.robot.robots.DefaultRobot;
 
 import java.util.ArrayList;
