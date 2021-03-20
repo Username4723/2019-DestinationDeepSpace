@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
+import frc.team2410.robot.input.InputSource;
 
 import static frc.team2410.robot.RobotMap.*;
 
@@ -47,14 +48,14 @@ public class Climb implements LogicController {
 	}
 
 	public void loop() {
-		if (robot.userInput.getJoyPOV() != 0 && robot.userInput.getJoyPOV() != 180 && !robot.semiAuto.lift) {
+		if (robot.inputManager.getPOV(InputSource.JOYSTICK) != 0 && robot.inputManager.getPOV(InputSource.JOYSTICK) != 180 && !robot.semiAuto.lift) {
 			double speed = -(targetHeight - getPosition());
 			if (speed > 0) speed /= 15;
 			speed = Math.max(-1, Math.min(1, speed));
 			winchMotor.set(speed);
 		} else if (!robot.semiAuto.lift) {
-			if (!(getPosition() < 0) || robot.userInput.getJoyPOV() != 0)
-				winchMotor.set(robot.userInput.getJoyPOV() == 0 ? robot.userInput.getSlider() : -robot.userInput.getSlider());
+			if (!(getPosition() < 0) || robot.inputManager.getPOV(InputSource.JOYSTICK) != 0)
+				winchMotor.set(robot.inputManager.getPOV(InputSource.JOYSTICK) == 0 ? robot.inputManager.getSlider() : -robot.inputManager.getSlider());
 			else winchMotor.set(0);
 			targetHeight = getPosition();
 		}

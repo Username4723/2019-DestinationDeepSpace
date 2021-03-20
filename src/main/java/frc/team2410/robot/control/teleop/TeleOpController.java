@@ -16,6 +16,7 @@ public class TeleOpController implements LogicController {
 
     @Override
     public void loop() {
+        // User Input Buttons
         if (robot.inputManager.getButtonState(InputSource.JOYSTICK, 5)) {
             robot.drivetrain.returnWheelsToZero();
         }
@@ -58,6 +59,8 @@ public class TeleOpController implements LogicController {
             robot.intake.toggleHatch();
         }
 
+
+        // Leading State Functionality
         if (robot.inputManager.getLeadingButtonState(XBOX, 9)) {
             robot.climb.reset(0);
         }
@@ -98,6 +101,7 @@ public class TeleOpController implements LogicController {
             robot.intake.moveWristTo(CARGO_LOADING_STATION_ANGLE);
         }
 
+        // XBox's POV
         int pov = robot.inputManager.getPOV(XBOX);
         if (pov == 0) {
             robot.intake.moveWristTo(CARGO_WRIST_ANGLE);
@@ -112,5 +116,8 @@ public class TeleOpController implements LogicController {
         if (resetPlace) {
             robot.semiAuto.reset(true);
         }
+
+        // Driving
+        robot.drivetrain.joystickDrive(robot.fieldOriented);
     }
 }

@@ -21,7 +21,6 @@ import java.util.Map;
 public class Robot extends TimedRobot {
 	public Drivetrain drivetrain;
 	public PigeonNav gyro;
-	public UserInput userInput;
 	public InputManager inputManager;
 	public Vision vision;
 	public SemiAuto semiAuto;
@@ -44,7 +43,6 @@ public class Robot extends TimedRobot {
 		//Create subsystems
 		gyro = new PigeonNav();
 		drivetrain = new Drivetrain(this);
-		userInput = new UserInput(this);
 		inputManager = new DefaultInput();
 		vision = new Vision();
 		semiAuto = new SemiAuto(this);
@@ -142,20 +140,20 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		//Run subsystem loops
 		gameControllers.get(GameState.AUTONOMOUS).forEach(LogicController::loop);
-		drivetrain.joystickDrive(fieldOriented);
 
+		int speed = 10 + (int) (10 * Math.sqrt(Math.pow(inputManager.getX(), 2) + Math.pow(inputManager.getY(), 2)) * inputManager.getSlider());
 		if (elevator.winchMotor.badCurrent()) {
-			led.status(255, 255, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
+			led.status(255, 255, 0, speed, fieldOriented);
 		} else if (semiAuto.placeState == -1) {
-			led.status(255, 0, 255, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
+			led.status(255, 0, 255, speed, fieldOriented);
 		} else if (semiAuto.engaged) {
-			led.status(255, 0, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
+			led.status(255, 0, 0, speed, fieldOriented);
 		} else if (vision.getCentralValue()[0] != 0) {
-			led.status(0, 255, 0, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
+			led.status(0, 255, 0, speed, fieldOriented);
 		} else {
-			led.status(0, 0, 255, 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()), fieldOriented);
+			led.status(0, 0, 255, speed, fieldOriented);
 		}
 
-		SmartDashboard.putNumber("LED Speed", 10 + (int) (10 * Math.sqrt(userInput.getX() * userInput.getX() + userInput.getY() * userInput.getY()) * userInput.getSlider()));
+		SmartDashboard.putNumber("LED Speed", speed);
 	}
 }
