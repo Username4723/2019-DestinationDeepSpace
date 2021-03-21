@@ -3,7 +3,7 @@ package frc.team2410.robot.control;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
@@ -52,12 +52,9 @@ public class Intake implements LogicController, DashboardComponent {
 		wheels.setInverted(true);
 		wrist.setInverted(true);
 		wristEncoder = new AnalogInput(WRIST_ENCODER);
-		pid = new PIDController(WRIST_P, WRIST_I, WRIST_D, wristEncoder, wrist, 0.002);
-		pid.setPercentTolerance(1);
-		pid.setInputRange(0, 5);
-		pid.setOutputRange(-1, 1);
-		pid.setContinuous(true);
-		pid.enable();
+		pid = new PIDController(WRIST_P, WRIST_I, WRIST_D, 0.002); //  wristEncoder, wrist,
+		pid.setTolerance(0.25 * 0.01);
+		pid.enableContinuousInput(0, 5);
 
 		pid.setSetpoint(getVoltage());
 	}
@@ -122,11 +119,11 @@ public class Intake implements LogicController, DashboardComponent {
 	public void loop() {
 		double wristStick = robot.inputManager.getAnalogStick(StickPosition.LEFT, StickAxis.Y);
 		if (wristStick != 0) {
-			pid.disable();
+			wrist.pidWrite(0);
 			setWrist(-wristStick);
 			pid.setSetpoint(getVoltage());
 		} else {
-			pid.enable();
+			wrist.pidWrite(Math.max(-1, Math.min(1, pid.calculate(wristEncoder.pidGet()))));
 		}
 	}
 }

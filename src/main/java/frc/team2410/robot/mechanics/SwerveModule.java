@@ -2,13 +2,14 @@ package frc.team2410.robot.mechanics;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.team2410.robot.config.WheelConfig;
 
 import static frc.team2410.robot.RobotMap.*;
 
 public class SwerveModule {
 	private final WPI_TalonSRX drive;
+	private final WPI_TalonSRX steerMotor;
 	private final float offset;
 	private final PIDController pid;
 	public AnalogInput positionEncoder;
@@ -22,15 +23,13 @@ public class SwerveModule {
 	SwerveModule(int steerMotor, int driveMotor, int encoder, float offset, boolean isInverted) {
 		//this->steer->ConfigNeutralMode(TalonSRX::NeutralMode::kNeutralMode_Brake);
 		this.offset = offset;
+		this.steerMotor = new WPI_TalonSRX(steerMotor);
 		this.drive = new WPI_TalonSRX(driveMotor);
 		this.drive.setInverted(isInverted);
 		this.positionEncoder = new AnalogInput(encoder);
-		this.pid = new PIDController(SWERVE_MODULE_P, SWERVE_MODULE_I, SWERVE_MODULE_D, this.positionEncoder, new WPI_TalonSRX(steerMotor), 0.002);
-		this.pid.setPercentTolerance(1);
-		this.pid.setInputRange(0.0, 5.0);
-		this.pid.setOutputRange(-1.0, 1.0);
-		this.pid.setContinuous(true);
-		this.pid.enable();
+		this.pid = new PIDController(SWERVE_MODULE_P, SWERVE_MODULE_I, SWERVE_MODULE_D, 0.002); // this.positionEncoder,
+		this.pid.setTolerance(0.25 * 0.01);
+		this.pid.enableContinuousInput(0.0, 5.0);
 
 		currentSpeed = 0;
 		zeroing = false;
@@ -70,6 +69,10 @@ public class SwerveModule {
 	void returnToZero() {
 		this.pid.setSetpoint(offset);
 		zeroing = true;
+	}
+
+	public void runPID() {
+		this.steerMotor.pidWrite(this.pid.calculate(Math.max(-1, Math.min(1, this.positionEncoder.pidGet()))));
 	}
 
 	public double getAngle() {

@@ -1,9 +1,9 @@
 package frc.team2410.robot.mechanics;
 
-import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.team2410.robot.DashboardComponent;
 import frc.team2410.robot.GameState;
-import frc.team2410.robot.NumericalPIDOutput;
+import frc.team2410.robot.LogicController;
 import frc.team2410.robot.Robot;
 import frc.team2410.robot.config.WheelPosition;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static frc.team2410.robot.RobotMap.*;
 
-public class Drivetrain implements DashboardComponent {
+public class Drivetrain implements LogicController, DashboardComponent {
 	private Robot robot;
 
 	private final PIDController gyroPID;
@@ -52,11 +52,17 @@ public class Drivetrain implements DashboardComponent {
 		//this.driveEnc = new Encoder(DRIVE_CIMCODER_A, DRIVE_CIMCODER_B);
 		//this.driveEnc.setDistancePerPulse(DRIVE_DIST_PER_PULSE);\
 
-		this.gyroPID = new PIDController(GYRO_P, GYRO_I, GYRO_D, robot.gyro, new NumericalPIDOutput(), 0.002);
-		gyroPID.setInputRange(-180, 180);
-		gyroPID.setOutputRange(-0.3, 0.3);
-		gyroPID.setContinuous(true);
-		gyroPID.enable();
+		this.gyroPID = new PIDController(GYRO_P, GYRO_I, GYRO_D, 0.002);
+		gyroPID.enableContinuousInput(-180, 180);
+	}
+
+	@Override
+	public void init() {
+	}
+
+	@Override
+	public void loop() {
+		this.swerveModules.values().forEach(SwerveModule::runPID);
 	}
 
 	public void resetHeading(int head) {
@@ -91,7 +97,7 @@ public class Drivetrain implements DashboardComponent {
 		// Sets desired heading dependant if gyro still moving
 		if ((rotation == 0 && Math.abs(pHead - robot.gyro.getHeading()) < 1) || robot.semiAuto.reng || robot.currentState == GameState.AUTONOMOUS) {
 			gyroPID.setSetpoint(desiredHeading);
-			rotation = -gyroPID.get();
+			rotation = -1 * Math.max(-0.3, Math.min(0.3, gyroPID.calculate(robot.gyro.pidGet())));
 		} else {
 			desiredHeading = robot.gyro.getHeading();
 			desiredHeading = wrap(desiredHeading, 180, -180);

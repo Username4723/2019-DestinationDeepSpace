@@ -57,9 +57,9 @@ public class Robot extends TimedRobot {
 		registerLogicController(GameState.TELEOP, intake);
 		registerLogicController(GameState.TELEOP, elevator);
 		registerLogicController(GameState.TELEOP, climb);
+		registerLogicController(GameState.ALL, drivetrain);
 
 		registerDashboardComponent(led);
-		registerDashboardComponent(drivetrain);
 		registerDashboardComponent(semiAuto);
 		registerDashboardComponent(vision);
 		registerDashboardComponent(gyro);
@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
+		gameControllers.get(GameState.ALL).forEach(LogicController::loop);
 		for (DashboardComponent component : dashboardComponents) {
 			publishData(component.getDashboardName(), component.getReportedData());
 		}
